@@ -1,0 +1,68 @@
+html, body{
+
+    font-family: 'Roboto', sans-serif;
+    margin:0;
+    padding:0;
+}
+
+#section1{
+    height:100vh;
+    background-color: lightseagreen;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+#top{
+    flex:1;
+}
+
+#mid{
+    width:100vw;
+    background-color:lightgrey;
+    flex:1;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-content:center;
+}
+
+#bot{
+    flex:1;
+}
+
+
+
+#anim1{
+    flex:1;
+    padding-left:10%;
+    padding-right:10%;
+}
+#form{
+    flex:1;
+}
+#anim2{
+    flex:1;
+    padding-left:10%;
+    padding-right:10%;
+}
+
+
+#section2{
+    background-color: lightsalmon;
+    text-align: center;
+}
+
+#titre_oeuvre{
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+
+}
