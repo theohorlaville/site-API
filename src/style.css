@@ -17,7 +17,7 @@ body{
     
     width:100vw;
     height:100vh;
-
+    box-sizing: border-box;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -87,6 +87,7 @@ input{
 }
 
 .bot{
+    padding: 0;
     margin:0;
     width:100vw;
     flex:1;
@@ -122,7 +123,7 @@ input{
 
 
 #section2{
-    width:0vw;
+    width:0vh;
     display:flex;
     flex-direction: column;
     justify-content:center;
@@ -130,6 +131,7 @@ input{
     height: 100vh;
     background-color: lightsalmon;
     transition-duration:1s;
+    box-sizing: border-box;
 }
 
 
@@ -147,6 +149,12 @@ input{
     margin:0;
     object-fit: contain;
     overflow-x: hidden; 
+}
+#bas{
+    object-fit: contain;
+    overflow-x: hidden;
+    width:100%;
+    margin:0;
 }
 
 #retour{
