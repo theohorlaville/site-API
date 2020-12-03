@@ -65,7 +65,7 @@ form{
 }
 
 input{
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Roboto', sans-serif;
     padding: 15px;
     margin: 10px;
     border:0px;
@@ -95,7 +95,7 @@ input{
 }
 
 .bot{
-    
+    text-align: center;
     width:100vw;
     flex:1;
     display: flex;
@@ -135,8 +135,8 @@ input{
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    height: 100vh;
-    background-color: lightsalmon;
+    height: auto;
+    background-image: linear-gradient(45deg, #da9ff9, #bedcfa);
     transition-duration:1s;
     box-sizing: border-box;
 }
@@ -147,7 +147,7 @@ input{
 
 #titre_oeuvre{
     text-align: center;
-    width:100%;
+    font-size: 400%;
     margin:0;
     object-fit: contain;
     overflow-x: hidden; 
@@ -158,6 +158,13 @@ input{
     object-fit: contain;
     overflow-x: hidden; 
 }
+
+.parole{
+    color:#1e1e1e ;
+    text-align: center;
+    white-space: pre;
+}
+
 #bas{
     display:flex;
     flex-direction:column;
