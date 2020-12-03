@@ -1,25 +1,45 @@
 html, body{
 
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Bebas Neue', cursive;
     margin:0;
     padding:0;
 }
+body{
+    display: flex;
+    width: 100vw;
+    background-color: #fcf8ec;
+}
 
 #section1{
+    background-image: url('../fond.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    width:100vw;
     height:100vh;
-    background-color: lightseagreen;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
 }
 #top{
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex:1;
+}
+
+h1{
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 10px;
+    font-size: 400%;
 }
 
 #mid{
     width:100vw;
-    background-color:lightgrey;
+
     flex:1;
     display:flex;
     justify-content: center;
@@ -27,19 +47,58 @@ html, body{
 }
 
 form{
+    width:20vw ;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-content:center;
 }
 
-#bot{
-    flex:1;
+input{
+    font-family: 'Bebas Neue', cursive;
+    padding: 20px;
+    margin: 10px;
+    border:0px;
 }
 
 
 
+#search{
+    background-color:#9aaad7;
+    color:#fcf8ec;
+    font-family: 'Bebas Neue', cursive;
+    margin:10px;
+    border: 0px;
+    transition-duration: 0.2s;
+}
+
+#search:hover{
+    background-color:#fcf8ec ;
+    color:#9aaad7;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    letter-spacing: 3px;
+
+}
+
+#bot{
+    width:100vw;
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-family: 'Roboto', sans-serif;
+    font-size: xx-small;
+    color:#fcf8ec;
+
+}
+
+#anim3{
+   
+}
+
 #anim1{
+    box-sizing: border-box;
     flex:1;
     padding-left:10%;
     padding-right:10%;
@@ -48,6 +107,7 @@ form{
     flex:1;
 }
 #anim2{
+    box-sizing: border-box;
     flex:1;
     padding-left:10%;
     padding-right:10%;
@@ -55,12 +115,30 @@ form{
 
 
 #section2{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
     background-color: lightsalmon;
+}
+#info{
     text-align: center;
+    justify-content: center;
+    align-items: center;
+
+}
+#titre_oeuvre{
+    width: 200%;
+    padding: 4%;
 }
 
-#titre_oeuvre{
-    margin: 0;
+#retour{
+    width: 10%;
+    font-family: 'Bebas Neue', cursive;
+    margin:10px;
+    border: 0px;
+    transition-duration: 0.2s;
 }
 
 @media screen and (max-width: 768px) {
