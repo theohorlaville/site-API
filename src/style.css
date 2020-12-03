@@ -1,5 +1,6 @@
 html, body{
 
+
     font-family: 'Bebas Neue', cursive;
     margin:0;
     padding:0;
@@ -40,7 +41,11 @@ h1{
     font-size: 400%;
 }
 
-
+h2{
+    object-fit: contain;
+    overflow-x: hidden; 
+    
+}
 
 #mid{
     width:100vw;
@@ -61,7 +66,7 @@ form{
 
 input{
     font-family: 'Bebas Neue', cursive;
-    padding: 20px;
+    padding: 15px;
     margin: 10px;
     border:0px;
 }
@@ -69,6 +74,9 @@ input{
 
 
 #search{
+
+    padding:10px;
+    
     background-color:#9aaad7;
     color:#fcf8ec;
     font-family: 'Bebas Neue', cursive;
@@ -87,8 +95,7 @@ input{
 }
 
 .bot{
-    padding: 0;
-    margin:0;
+    
     width:100vw;
     flex:1;
     display: flex;
@@ -139,6 +146,7 @@ input{
 
 
 #titre_oeuvre{
+    text-align: center;
     width:100%;
     margin:0;
     object-fit: contain;
@@ -146,19 +154,23 @@ input{
 }
 #auteur{
     width:100%;
-    margin:0;
+    text-align: center;
     object-fit: contain;
     overflow-x: hidden; 
 }
 #bas{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
     object-fit: contain;
     overflow-x: hidden;
     width:100%;
-    margin:0;
+
 }
 
 #retour{
-    margin:0;
+    
     font-family: 'Bebas Neue', cursive;
     border: 0px;
     transition-duration: 0.2s;
@@ -166,6 +178,7 @@ input{
     width:10vw;
     object-fit: contain;
     overflow-x: hidden;
+    cursor: pointer;
     
 }
 
