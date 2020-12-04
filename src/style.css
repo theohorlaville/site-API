@@ -7,7 +7,7 @@ html, body{
 }
 body{
     display: flex;
-    width: 100vw;
+    
     background-color: #fcf8ec;
 }
 
@@ -46,6 +46,50 @@ h2{
     overflow-x: hidden; 
     
 }
+
+
+.cls-4{
+    animation: bouge 2s infinite alternate;
+}
+@keyframes bouge{
+    from{
+        transform: translate(-50px,-40px);
+    }
+    to{
+        transform: translate(-100px,-90px);
+    }
+
+}
+
+
+
+#trompette{
+    transform-origin: center;
+    animation: joue 2s infinite alternate;
+}
+
+#sax{
+    transform-origin: center;
+    animation: joue 2s infinite alternate;
+}
+
+#note1{
+    animation: bouge 3.5s infinite alternate;
+}
+#note2{
+    animation: bouge 3s infinite alternate;
+}
+
+@keyframes joue{
+    from{
+        transform: rotate(-8deg);
+    }
+    to{
+        transform: rotate(8deg);
+    }
+
+}
+
 
 #mid{
     width:100vw;
@@ -113,6 +157,7 @@ input{
 
 
 #anim1{
+    display: block;
     box-sizing: border-box;
     flex:1;
     padding-left:10%;
@@ -153,13 +198,14 @@ input{
     overflow-x: hidden; 
 }
 #auteur{
-    width:100%;
+    
     text-align: center;
     object-fit: contain;
     overflow-x: hidden; 
 }
 
 .parole{
+    width: auto;
     color:#1e1e1e ;
     text-align: center;
     white-space: pre;
@@ -172,23 +218,42 @@ input{
     align-items:center;
     object-fit: contain;
     overflow-x: hidden;
-    width:100%;
+    width: 20%;
+    
 
 }
 
 #retour{
-    
+    background-color:#fcf8ec ;
+    margin:3% 0%;
     font-family: 'Bebas Neue', cursive;
     border: 0px;
     transition-duration: 0.2s;
-    height:10vh;
-    width:10vw;
+    padding: 5px 20px ;
     object-fit: contain;
     overflow-x: hidden;
     cursor: pointer;
     
 }
 
-@media screen and (max-width: 768px) {
 
+    
+
+#retour:hover{
+    background-color: rgba(0, 0, 0, 0) ;
+    color:#fcf8ec;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    letter-spacing: 3px;
+
+}
+@media (max-width: 768px) {
+   
+    #anim1{
+        display: none;
+    }
+
+    #anim2{
+        display: none;
+    }   
 }

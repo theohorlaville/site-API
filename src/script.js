@@ -52,7 +52,7 @@ request.onreadystatechange = function () {
   }
 };
 request.send();
-
+retour.style.opacity=1;
 
 
 
@@ -68,10 +68,13 @@ retour.addEventListener('click',function(){
     form.artiste.value='';
     titreOeuvre.innerHTML='';
     auteur.innerHTML="";
+    retour.style.opacity=0;
 
 
 })
     
 
 })
+
+
 
