@@ -256,4 +256,25 @@ input{
     #anim2{
         display: none;
     }   
+
+    form{
+        width: 50vw;
+    }
+
+    input{
+        padding: 10px;
+        margin: 5px;
+    }
+
+    #search:hover{
+        letter-spacing: 2px;
+    }
+
+    #bas{
+        width: 50%;
+    }
+
+    #retour:hover{
+        letter-spacing: 2px;
+    }
 }
