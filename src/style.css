@@ -231,6 +231,7 @@ input {
     }   
 
     form {
+        flex: 0.5;
         width: 50vw;
     }
 
