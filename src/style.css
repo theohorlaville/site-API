@@ -1,21 +1,25 @@
-html, body{
-
-
+html, body {
     font-family: 'Bebas Neue', cursive;
     margin:0;
     padding:0;
 }
-body{
+
+body {
     display: flex;
-    
     background-color: #fcf8ec;
+    object-fit: contain;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
-#section1{
-    background-image: url('../fond.png');
+/*---------------PARTIE FORMULAIRE-------------------*/
+
+/*--structure--*/
+
+#section1 {
+    background-image: url('../assets/fond.png');
     background-repeat: no-repeat;
     background-size: cover;
-    
     width:100vw;
     height:100vh;
     box-sizing: border-box;
@@ -27,7 +31,7 @@ body{
 }
 
 
-#top{
+#top {
     width:100vw;
     display: flex;
     justify-content: center;
@@ -35,92 +39,95 @@ body{
     flex:1;
 }
 
-h1{
+h1 {
     font-family: 'Bebas Neue', cursive;
     letter-spacing: 10px;
     font-size: 400%;
 }
 
-h2{
-    object-fit: contain;
-    overflow-x: hidden; 
-    
-}
-
-
-.cls-4{
-    animation: bouge 2s infinite alternate;
-}
-@keyframes bouge{
-    from{
-        transform: translate(-50px,-40px);
-    }
-    to{
-        transform: translate(-100px,-90px);
-    }
-
-}
-
-
-
-#trompette{
-    transform-origin: center;
-    animation: joue 2s infinite alternate;
-}
-
-#sax{
-    transform-origin: center;
-    animation: joue 2s infinite alternate;
-}
-
-#note1{
-    animation: bouge 3.5s infinite alternate;
-}
-#note2{
-    animation: bouge 3s infinite alternate;
-}
-
-@keyframes joue{
-    from{
-        transform: rotate(-8deg);
-    }
-    to{
-        transform: rotate(8deg);
-    }
-
-}
-
-
-#mid{
+#mid {
     width:100vw;
-
     flex:1;
     display:flex;
     justify-content: center;
     align-items:center;
 }
 
-form{
+/*--animations--*/
+
+#anim2 {
+    flex:1;
+    padding-left:10%;
+    padding-right:10%;
+}
+
+#anim1 {
+    display: block;
+    flex:1;
+    padding-left:10%;
+    padding-right:10%;
+}
+
+.cls-4 {
+    animation: bouge 2s infinite alternate; 
+}
+
+@keyframes bouge {
+    from{
+        transform: translate(-50px,-40px);
+    }
+    to{
+        transform: translate(-100px,-90px);
+    }
+}
+
+#trompette {
+    transform-origin: center;
+    animation: joue 2s infinite alternate;
+}
+
+#sax {
+    transform-origin: center;
+    animation: joue 2s infinite alternate;
+}
+
+#note1 {
+    animation: bouge 3.5s infinite alternate;
+}
+
+#note2 {
+    animation: bouge 3s infinite alternate;
+}
+
+@keyframes joue {
+    from{
+        transform: rotate(-8deg);
+    }
+    to{
+        transform: rotate(8deg);
+    }
+}
+
+/*--formulaire--*/
+
+form {
     width:20vw ;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-content:center;
+    flex:1;
 }
 
-input{
+input {
     font-family: 'Roboto', sans-serif;
     padding: 15px;
     margin: 10px;
     border:0px;
 }
 
-
-
-#search{
-
+#search {
     padding:10px;
-    
     background-color:#9aaad7;
     color:#fcf8ec;
     font-family: 'Bebas Neue', cursive;
@@ -129,16 +136,17 @@ input{
     transition-duration: 0.2s;
 }
 
-#search:hover{
+#search:hover {
     background-color:#fcf8ec ;
     color:#9aaad7;
     transition-duration: 0.2s;
     cursor: pointer;
     letter-spacing: 3px;
-
 }
 
-.bot{
+/*--crédit--*/
+
+#bot {
     text-align: center;
     width:100vw;
     flex:1;
@@ -148,33 +156,11 @@ input{
     font-family: 'Roboto', sans-serif;
     font-size: xx-small;
     color:#fcf8ec;
-    object-fit: contain;
-    overflow-x: hidden; 
-    
-
 }
 
+/*---------------PARTIE LYRICS-------------------*/
 
-
-#anim1{
-    display: block;
-    box-sizing: border-box;
-    flex:1;
-    padding-left:10%;
-    padding-right:10%;
-}
-#form{
-    flex:1;
-}
-#anim2{
-    box-sizing: border-box;
-    flex:1;
-    padding-left:10%;
-    padding-right:10%;
-}
-
-
-#section2{
+#section2 {
     width:0vh;
     display:flex;
     flex-direction: column;
@@ -183,98 +169,85 @@ input{
     height: auto;
     background-image: linear-gradient(45deg, #da9ff9, #bedcfa);
     transition-duration:1s;
-    box-sizing: border-box;
+    object-fit: contain;
+    overflow: hidden;
 }
 
-
-
-
-
-#titre_oeuvre{
+#titre-oeuvre {
     text-align: center;
     font-size: 400%;
     margin:0;
-    object-fit: contain;
-    overflow-x: hidden; 
-}
-#auteur{
-    
-    text-align: center;
-    object-fit: contain;
-    overflow-x: hidden; 
 }
 
-.parole{
+#auteur {
+    text-align: center;
+}
+
+.parole {
     width: auto;
     color:#1e1e1e ;
     text-align: center;
     white-space: pre;
 }
 
-#bas{
+#bas {
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    object-fit: contain;
-    overflow-x: hidden;
     width: 20%;
-    
-
+    object-fit: contain;
+    overflow: hidden;
 }
 
-#retour{
+#retour {
     background-color:#fcf8ec ;
     margin:3% 0%;
     font-family: 'Bebas Neue', cursive;
     border: 0px;
     transition-duration: 0.2s;
-    padding: 5px 20px ;
-    object-fit: contain;
-    overflow-x: hidden;
-    cursor: pointer;
-    
+    padding: 5px 20px;
+    pointer-events: initial;
 }
 
-
-    
-
-#retour:hover{
+#retour:hover {
     background-color: rgba(0, 0, 0, 0) ;
     color:#fcf8ec;
     transition-duration: 0.2s;
-    cursor: pointer;
+    pointer-events: initial;
     letter-spacing: 3px;
-
 }
+
+/*---------------MEDIA QUERIES-------------------*/
+
 @media (max-width: 768px) {
    
-    #anim1{
+    #anim1 {
         display: none;
     }
 
-    #anim2{
+    #anim2 {
         display: none;
     }   
 
-    form{
+    form {
         width: 50vw;
     }
 
-    input{
+    input {
         padding: 10px;
         margin: 5px;
     }
 
-    #search:hover{
+    #search:hover {
         letter-spacing: 2px;
     }
 
-    #bas{
+    #bas {
         width: 50%;
     }
 
-    #retour:hover{
+    #retour:hover {
         letter-spacing: 2px;
     }
 }
