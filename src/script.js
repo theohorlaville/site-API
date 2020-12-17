@@ -8,8 +8,8 @@ const form=document.querySelector('form');
 const titreOeuvre=document.querySelector('#titre_oeuvre');
 const auteur=document.querySelector('#auteur');
 const bas= document.querySelector('#bas');
-var lyrics=document.createElement("p");
-var request = new XMLHttpRequest();
+let lyrics=document.createElement("p");
+let request = new XMLHttpRequest();
 
 
 form.addEventListener('submit',function(e){
