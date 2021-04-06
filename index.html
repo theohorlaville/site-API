@@ -11,6 +11,46 @@
     <title>LYR'IMACS</title>
   </head>
   <body>
+    <section id="section3">
+
+      <div id="user">
+      <div id="message"></div>
+
+      <div id="connexion">
+            <h2>Veuillez vous conneter</h2>
+            <form id='form2'>
+                  <input name="pseudo" type="text" placeholder='login'>
+                  <input name="mdp" type="password" placeholder='mot de passe'>
+                  <button id="envoyer">Se connecter</button>
+            </form>
+            <h3>
+                  Pas de compte ? Créez en un <a id='inscription-button'>ici</a> 
+            </h3>
+      </div>
+
+      <div id="inscription">
+            <form id='form3'>
+                  <h2>Oh un petit nouveau ?</h2>
+                  <label>Une adresse mail stp (promis on spam pas)</label>
+                  <input name="email" type="email">
+                  <label>Un nom l'artiste</label>
+                  <input name="pseudo" type="text">
+                  <label>Un mot de passe bien secret</label>
+                  <input name="password" type="password">
+                  <button id='crea-compte'>Je m'inscris</button>
+                  <button id='retour-connexion'>Retour connexion</button>
+            </form>
+      </div>
+
+      <button id="retour1" type="button">Retour accueil</button>
+      <div id='cache'></div>
+      </div>
+      <div id="test"></div>
+
+      </div>
+
+    </section>
+
     <section id="section1">
       <div id="top" >
         <h1>LYR'IMACS</h1>
@@ -47,11 +87,14 @@
           <path class="cls-4"   d="M129.46,498.1V663.53c-6.77-6.52-19.89-6.69-31.45.18-13.14,7.8-19.27,21.72-13.71,31.09s20.73,10.64,33.86,2.83c9.81-5.83,15.71-15.07,15.76-23.27h0V498.1Z"
                   transform="translate(-82.25 -138.79)"/>
         </svg>
-        <form>
+
+
+        <form id="form1">
           <input name="artiste" type="text" placeholder="stromae"  required>
           <input name="titre" type="text" placeholder="papaoutai"  required>
           <button id="search" type="submit">Chercher les paroles</button>
         </form>
+          
         <svg id="anim1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="-110 -90 800 640">
           <defs>
             <style>.cls-1bis{fill:#fcf7c9;}.cls-2bis{fill:#e0deb5;}.cls-3bis{fill:#9aaad7;}.cls-4bis{fill:#9aaad7;}.cls-5bis{fill:#1d1d1b;}</style>
@@ -88,15 +131,20 @@
           </g>    
         </svg>
       </div>
+      <button id='commu'>Communauté</button>
       <div id="bot">
         <h2> Site réalisé par Horlaville Théo et Roberty Jordan IMAC 2023</h2>
       </div>                
+    
     </section>
+
+    
+
     <section id="section2">          
       <h2 id="titre-oeuvre"></h2>
       <h2 id="auteur"></h2>
       <div id="bas">
-        <button id="retour" type="button">Une autre musique ?</button>
+        <button id="retour2" type="button">Une autre musique ?</button>
       </div>
     </section>
   </body>

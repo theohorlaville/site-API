@@ -17,6 +17,8 @@ body {
 /*--structure--*/
 
 #section1 {
+    position: relative;
+    z-index: 10;
     background-image: url('../assets/fond.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -28,6 +30,8 @@ body {
     justify-content:center;
     align-items:center;
     transition-duration:1s;
+    object-fit: contain;
+    overflow: hidden;
 }
 
 
@@ -44,6 +48,7 @@ h1 {
     letter-spacing: 10px;
     font-size: 400%;
 }
+
 
 #mid {
     width:100vw;
@@ -110,13 +115,17 @@ h1 {
 
 /*--formulaire--*/
 
-form {
+
+
+#form1 {
     width:20vw ;
+}
+
+form{
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-content:center;
-    flex:1;
 }
 
 input {
@@ -144,6 +153,25 @@ input {
     letter-spacing: 3px;
 }
 
+
+#commu{
+    padding:10px;
+    background-color:#9aaad7;
+    color:#fcf8ec;
+    font-family: 'Bebas Neue', cursive;
+    border: 0px;
+    width:20vw;
+    transition-duration: 0.2s;
+}
+
+#commu:hover {
+    background-color:#fcf8ec ;
+    color:#9aaad7;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    letter-spacing: 3px;
+}
+
 /*--crédit--*/
 
 #bot {
@@ -161,6 +189,8 @@ input {
 /*---------------PARTIE LYRICS-------------------*/
 
 #section2 {
+    position: relative;
+    z-index: 1;
     width:0vh;
     display:flex;
     flex-direction: column;
@@ -200,24 +230,153 @@ input {
     overflow: hidden;
 }
 
-#retour {
+#retour1, #retour2, #envoyer, #crea-compte, #retour-connexion {
     background-color:#fcf8ec ;
     margin:3% 0%;
     font-family: 'Bebas Neue', cursive;
     border: 0px;
     transition-duration: 0.2s;
     padding: 5px 20px;
-    pointer-events: initial;
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
 }
 
-#retour:hover {
+#retour1:hover, #retour2:hover, #envoyer:hover, #crea-compte:hover, #retour-connexion:hover {
     background-color: rgba(0, 0, 0, 0) ;
     color:#fcf8ec;
     transition-duration: 0.2s;
-    pointer-events: initial;
     letter-spacing: 3px;
 }
 
+/*---------------PARTIE COMMU-------------------*/
+
+#section3{
+    position: relative;
+    z-index: 1;
+    width:0vh;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    height: auto;
+    background-image: linear-gradient(45deg, #da9ff9, #bedcfa);
+    transition-duration:1s;
+    object-fit: contain;
+    overflow: hidden;
+}
+
+#user{
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+#message{
+    transition-duration: 0.5s;
+    position: relative;
+    z-index: 5;
+    background-color: white;
+    border-radius: 4px;
+    width: 20vw;
+    height: 5vw;
+    opacity: 0;
+    justify-self:start;
+}
+
+#cache{
+    position: fixed;
+    transition-duration: 0.5s;
+    filter: blur(4px);
+    background-color: black;
+    opacity: 0%;
+    z-index: 2;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+
+#connexion{
+    object-fit: contain;
+    overflow: hidden;
+    transition-duration: 0.2s;
+    transition-delay: 0.2s;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    width: 20vw;
+    height: 40vh;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+#form2 {
+    
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width:80%;
+    height:80%;
+}
+
+#inscription-button{
+    height: 200%;
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+}
+
+#inscription{
+    position: relative;
+    z-index: 5;
+    transition-delay: 0.2s;
+    transition-duration: 0.2s;
+    text-align: center;
+    width: 20vw;
+    height: 0vh;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+    overflow: hidden;
+    border-radius: 5px;
+
+}
+
+#form3 {
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width:80%;
+    height: 80%;
+}
+
+
+#retour1{
+    position:relative;
+}
+
+#test{
+    background-color: wheat;
+    position: relative;
+    z-index: 4;
+    width: 40vw;
+    height: 40vh;
+}
 /*---------------MEDIA QUERIES-------------------*/
 
 @media (max-width: 768px) {
