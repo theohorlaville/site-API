@@ -12,42 +12,60 @@
   </head>
   <body>
     <section id="section3">
+      
+      
 
       <div id="user">
-      <div id="message"></div>
+            <div id="message"></div>
 
-      <div id="connexion">
-            <h2>Veuillez vous conneter</h2>
-            <form id='form2'>
-                  <input name="pseudo" type="text" placeholder='login'>
-                  <input name="mdp" type="password" placeholder='mot de passe'>
-                  <button id="envoyer">Se connecter</button>
-            </form>
-            <h3>
-                  Pas de compte ? Créez en un <a id='inscription-button'>ici</a> 
-            </h3>
+            <div id="connexion">
+                  <h2>Veuillez vous connecter</h2>
+                  <form id='form2'>
+                        <input name="pseudo" type="text" placeholder='login'>
+                        <input name="mdp" type="password" placeholder='mot de passe'>
+                        <button id="envoyer">Se connecter</button>
+                  </form>
+                  <h3>
+                        Pas de compte ? Créez en un <a id='inscription-button'>ici</a> 
+                  </h3>
+            </div>
+
+            <div id="inscription">
+                  <form id='form3'>
+                        <h2>Oh un petit nouveau ?</h2>
+                        <label>Une adresse mail stp (promis on spam pas)</label>
+                        <input name="email" type="email">
+                        <label>Un nom l'artiste</label>
+                        <input name="pseudo" type="text">
+                        <label>Un mot de passe bien secret</label>
+                        <input name="password" type="password">
+                        <div id="photos">
+                              <img id="photo1" src="./assets/user.png">
+                              <img id="photo2" src="./assets/user.png">
+                              <img id="photo3" src="./assets/user.png">
+                        </div>
+                        <button id='crea-compte'>Je m'inscris</button>
+                        <button id='retour-connexion'>Retour connexion</button>
+                  </form>
+            </div>
+
+            <button id="retour1" type="button">Retour accueil</button>
+            <div id='cache'></div>
       </div>
 
-      <div id="inscription">
-            <form id='form3'>
-                  <h2>Oh un petit nouveau ?</h2>
-                  <label>Une adresse mail stp (promis on spam pas)</label>
-                  <input name="email" type="email">
-                  <label>Un nom l'artiste</label>
-                  <input name="pseudo" type="text">
-                  <label>Un mot de passe bien secret</label>
-                  <input name="password" type="password">
-                  <button id='crea-compte'>Je m'inscris</button>
-                  <button id='retour-connexion'>Retour connexion</button>
-            </form>
+      <div id="communaute">
+
+            <div id='interface'>
+                             
+            </div>
+
+            <div id="accueil">
+                  <h2 id="titre-accueil">Partageons de bonnes ondes</h2>
+            </div>
+            
       </div>
 
-      <button id="retour1" type="button">Retour accueil</button>
-      <div id='cache'></div>
-      </div>
-      <div id="test"></div>
-
-      </div>
+ 
 
     </section>
 

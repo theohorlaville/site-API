@@ -19,6 +19,9 @@ const creaCompte=document.querySelector("#crea-compte");
 const cache=document.querySelector("#cache");
 const message=document.querySelector("#message");
 const retourConnexion=document.querySelector("#retour-connexion");
+const user=document.querySelector("#user");
+const communaute=document.querySelector("#communaute");
+const interface=document.querySelector("#interface");
 let flagCache=false;
 
 var lyrics=document.createElement("p");
@@ -44,6 +47,10 @@ commu.addEventListener("click",function(){
   setTimeout(function(){
     cache.style.opacity='40%';
   },800);}
+  if(!flagCache){
+    setTimeout(function(){
+      cache.style.display='block';
+    },900);}
 
 })
 
@@ -87,8 +94,6 @@ retour2.addEventListener('click',function(){
   titreOeuvre.innerHTML='';
   auteur.innerHTML="";
   retour2.style.opacity=0;
-
-
 })
 
 
@@ -100,20 +105,24 @@ retour1.addEventListener('click',function(){
   sect3.style.width=0+'vw';
   retour1.style.opacity=0;
   cache.style.opacity=0;
-
-
 })
   
 envoyer.addEventListener('click',function(e){
   e.preventDefault();
   connexion.style.height=0;
   cache.style.opacity=0;
+  if(!flagCache){
+    setTimeout(function(){
+      cache.style.display='none';
+      user.style.display='none';
+    },600);}
   flagCache=true;
+  communaute.style.filter='blur(0px)';
 })
 
 inscriptionBouton.addEventListener('click',function(){
   connexion.style.height=0;
-  inscription.style.height='50vh'
+  inscription.style.height='60vh'
 })
 
 creaCompte.addEventListener('click',function(e){
@@ -131,6 +140,7 @@ retourConnexion.addEventListener('click',function(e){
   connexion.style.height='40vh';
   inscription.style.height='0';
 })
+
 
 })
 
