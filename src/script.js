@@ -143,6 +143,7 @@ retourConnexion.addEventListener('click',function(e){
 
 interface_bouton.addEventListener('click', () => {
   interface.classList.toggle('displayed');
+  accueil.classList.toggle('displayed');
   document.querySelector('html body').style.overflowY = 'scroll';
 });
 

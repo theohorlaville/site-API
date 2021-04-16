@@ -229,7 +229,8 @@ input {
     overflow: hidden;
 }
 
-#retour1, #retour2, #envoyer, #crea-compte, #retour-connexion, #valide_ajout_bouton, #annul_ajout_bouton  {
+#retour1, #retour2, #envoyer, #crea-compte, #retour-connexion,
+ #valide_ajout_bouton, #annul_ajout_bouton, #rechercher  {
     background-color:#fcf8ec ;
     font-family: 'Bebas Neue', cursive;
     border: 0px;
@@ -244,12 +245,12 @@ input {
     margin:3% 0%;
 }
 
-#crea-compte, #retour-connexion{
+#crea-compte, #retour-connexion, #rechercher{
     margin: 1% 0%;
 }
 
 #retour1:hover, #retour2:hover, #envoyer:hover, #crea-compte:hover, #retour-connexion:hover,
-#valide_ajout_bouton:hover , #annul_ajout_bouton:hover {
+#valide_ajout_bouton:hover , #annul_ajout_bouton:hover, #rechercher:hover {
     background-color: rgba(0, 0, 0, 0) ;
     color:#fcf8ec;
     transition-duration: 0.2s;
@@ -408,18 +409,18 @@ padding: 0;
     color: white;
     font-size: 400%;
     letter-spacing: 3px;
+    text-align: center;
 }
 
 #interface{
     background-color: rgb(208, 140, 235);
-    flex:1;
-    height: 100vh;
-    transform: translateX(-20vw);
+    height: 100%;
+    width: 0 ;
     transition: 0.5s ease-out;
 }
 
 #interface.displayed {
-    transform: translateX(0);
+    width: 20% ;
 }
 
 .interface_bouton{
@@ -439,8 +440,13 @@ padding: 0;
     display: flex;
     flex-direction: column;
     align-content: center;
-    flex:4;
-    height: 100%;
+    height: inherit;
+    width: 100%;
+    transition: 0.5s ease-out;
+}
+
+#accueil.displayed {
+    width: 100%;
 }
 
 /*---------------COMMU 2 :  barre de recherche ------------------*/
@@ -473,10 +479,10 @@ padding: 0;
     padding:  0 0 0 1.5%;
 }
 
-#form4 select {
+#form4 select, #form5 select {
     cursor: pointer;
-    color: #000000;
-    font-family: 'Roboto';
+    color: #fcf8ec;
+    font-family: 'Bebas Neue', cursive;
     font-size: 1em;
     border: none;
     padding: 0 30px 0 5px;
@@ -498,21 +504,12 @@ padding: 0;
     border-bottom: 2px solid #323232;
     flex-grow: 1;
     padding: 1%;
+    margin: 0 20px 0 0;
 }
 
 #form4 .search-bar: placeholder-shown {
     color: #e7e7e7ab;
     font-size: 1em;
-}
-
-#form4 button::before {
-    content: "";
-    width: 40px;
-    height: 100%;
-    background-size: 50%;
-    position: absolute;
-    top: 0;
-    right: 5px;
 }
 
 /*---------------COMMU 3 :  affiche /ajoute chanson ------------------*/
@@ -561,9 +558,14 @@ padding: 0;
     padding: 0 1.5% 0 1.5%;
 }
 
-#champ1, #champ2, #champ3, #champ4 {
+#champ1, #champ2, #champ4 {
     display: flex;
     justify-content: space-evenly;
+}
+
+#champ3{
+    display: flex;
+    margin-left: 30px;
 }
 
 #form5 .barre-titre , #form5 .barre-artiste{
