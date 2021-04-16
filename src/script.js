@@ -22,6 +22,9 @@ const retourConnexion=document.querySelector("#retour-connexion");
 const user=document.querySelector("#user");
 const communaute=document.querySelector("#communaute");
 const interface=document.querySelector("#interface");
+const interface_bouton = document.querySelector(".interface_bouton");
+const nvl_chanson_bouton = document.querySelector(".nvl_chanson_bouton");
+const annul_ajout_bouton = document.querySelector("#annul_ajout_bouton");
 let flagCache=false;
 
 var lyrics=document.createElement("p");
@@ -34,9 +37,6 @@ form1.addEventListener('submit',function(e){
     sect2.style.width=100+'vw';
     retour2.style.opacity=1;
     parole();
-
-    
-
 });
 
 commu.addEventListener("click",function(){
@@ -122,7 +122,7 @@ envoyer.addEventListener('click',function(e){
 
 inscriptionBouton.addEventListener('click',function(){
   connexion.style.height=0;
-  inscription.style.height='60vh'
+  inscription.style.height='auto'
 })
 
 creaCompte.addEventListener('click',function(e){
@@ -140,6 +140,21 @@ retourConnexion.addEventListener('click',function(e){
   connexion.style.height='40vh';
   inscription.style.height='0';
 })
+
+interface_bouton.addEventListener('click', () => {
+  interface.classList.toggle('displayed');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
+
+nvl_chanson_bouton.addEventListener('click', () => {
+  ajoute_chanson.classList.toggle('displayed');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
+
+annul_ajout_bouton.addEventListener('click', () => {
+  ajoute_chanson.classList.toggle('displayed');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
 
 
 })

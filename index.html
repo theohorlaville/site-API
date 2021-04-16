@@ -13,8 +13,6 @@
   <body>
     <section id="section3">
       
-      
-
       <div id="user">
             <div id="message"></div>
 
@@ -26,24 +24,27 @@
                         <button id="envoyer">Se connecter</button>
                   </form>
                   <h3>
-                        Pas de compte ? Créez en un <a id='inscription-button'>ici</a> 
+                        Pas de compte ? Crée en un <a id='inscription-button'>ici</a> 
                   </h3>
             </div>
 
             <div id="inscription">
                   <form id='form3'>
-                        <h2>Oh un petit nouveau ?</h2>
+                        <h2>Oh, un petit nouveau !</h2>
                         <label>Une adresse mail stp (promis on spam pas)</label>
-                        <input name="email" type="email">
+                        <input class="email" type="email">
                         <label>Un nom l'artiste</label>
-                        <input name="pseudo" type="text">
+                        <input class="pseudo" type="text">
                         <label>Un mot de passe bien secret</label>
-                        <input name="password" type="password">
+                        <input class="password" type="password">
+                        <label>Choisis ta pdp, charo va </label>
                         <div id="photos">
-                              <img id="photo1" src="./assets/user.png">
-                              <img id="photo2" src="./assets/user.png">
-                              <img id="photo3" src="./assets/user.png">
-                        </div>
+                              <img id="photo1" src="./assets/13.png">
+                              <img id="photo2" src="./assets/17.png">
+                              <img id="photo3" src="./assets/19.png">
+                              <img id="photo4" src="./assets/32.png">
+                              <img id="photo5" src="./assets/57.png">
+                              <img id="photo6" src="./assets/53.png">                        </div>
                         <button id='crea-compte'>Je m'inscris</button>
                         <button id='retour-connexion'>Retour connexion</button>
                   </form>
@@ -54,14 +55,55 @@
       </div>
 
       <div id="communaute">
+                  <div id='interface'>          
+                  </div>
+                  <div id='accueil'>
+                        <h2 id="titre-accueil">Partageons de bonnes ondes</h2>
+                        <span class="interface_bouton">
+                              Interface
+                        </span>
+                        <div id='barre_recherche'>
+                              <form id='form4' action="#">
+                                    <label for="search-type"> Je veux un </label>
+                                    <select name="search-type" class="search-type">
+                                          <option value="titre">titre</option>
+                                          <option value="artiste">artiste</option>
+                                    </select>
+                                    <input type="text" class="search-bar" placeholder="Papaoutai, Billie Jean..." required="required">
+                                    <button type="submit">Rechercher</button>
+                              </form>
+                        </div>
+                        <div id='affiche_chansons'>
 
-            <div id='interface'>
-                             
-            </div>
-
-            <div id="accueil">
-                  <h2 id="titre-accueil">Partageons de bonnes ondes</h2>
-            </div>
+                        </div>
+                        <span class="nvl_chanson_bouton">
+                              Nouvelle chanson
+                        </span>
+                        <div id='ajoute_chanson'>
+                              <form id='form5' action="#">
+                                    <h3>Ya pas de raison qu'elle n'y soit pas ! </h3>
+                                    <div id=champ1>
+                                          <label>Son titre déjà :</label>
+                                          <input class="barre-titre" type="text" placeholder="Le restaurant" required="required">
+                                    </div>
+                                    <div id=champ2>
+                                          <label>Kiki chante ?</label>
+                                          <input class="barre-artiste" type="text" placeholder="Franky Vincent" required="required">
+                                    </div>
+                                    <div id=champ3>
+                                          <label>Un truc du genre ...</label>
+                                          <select name="genre" class="genre">
+                                                <option value="rock">rock</option>
+                                                <option value="electro">electro</option>
+                                          </select>
+                                    </div>
+                                    <div id=champ4>
+                                          <button id='valide_ajout_bouton'>Hop, ça part !</button>
+                                          <button id='annul_ajout_bouton'>Flemme en fait...</button>
+                                    </div>
+                              </form>
+                        </div>
+                  </div>
             
       </div>
 
