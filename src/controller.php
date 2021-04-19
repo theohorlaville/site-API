@@ -48,7 +48,7 @@
 
         else
         {
-            echo json_encode('1');
+            echo json_encode(connexionUser($pseudo,$mdp));
         }
 
     }

@@ -136,9 +136,16 @@ function connexionUser($pseudo,$mdp){
 
     $rs->execute(array($pseudo));
     $result=$rs->fetch();
-    $alors=password_verify($mdp,$result[0]);
-    return $alors;
+    
+    if(password_verify($mdp,$result[0])==TRUE){
+        $rs=$link->prepare("SELECT id_Uti FROM utilisateurs AS u WHERE u.pseudo=? ");
+        $rs->execute(array($pseudo));
+        $result=$rs->fetch();
+        return $result[0];
+    }
+    return FALSE;
 }
+
 
 
 //Recupere la liste des chansons d'un artiste donné

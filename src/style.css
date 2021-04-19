@@ -606,11 +606,22 @@ h3{
     width: 80vw;
     background-color: blue;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 
 }
+
+.commentaire{
+    width: 50%;
+}
+.info-chanson{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /*---------------MEDIA QUERIES-------------------*/
 
 @media (max-width: 768px) {

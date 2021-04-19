@@ -38,6 +38,8 @@ const annul_ajout_bouton = document.querySelector("#annul_ajout_bouton");
 const chansons=document.querySelector('#affiche_chansons');
 let flagCache=false;
 
+let id_utilisateur=0;
+
 var lyrics=document.createElement("p");
 var request = new XMLHttpRequest();
 
@@ -207,7 +209,8 @@ envoyer.addEventListener('click',function(e){
 })
 
 function verifConnexion(data){
-  console.log(data)
+  id_utilisateur=data;
+  console.log(id_utilisateur)
   if(data=='0')
   {
     const information='<p>Pseudo ou mot de passe incorrect</p>';
@@ -347,10 +350,10 @@ function afficheChansons(data){
   // planets is an array of Objects. An array has a method for looping over all elements
   data.forEach(function (chanson) {
     // here, we have an object (planet) that represents each line
-    content += "<div class='chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4>";
-    content +="</div>";
+    content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div><div class='commentaire'></div>";
+    content += "</div>";
   });
-  content += "</div>";
+
   chansons.innerHTML = content;
 }
 
