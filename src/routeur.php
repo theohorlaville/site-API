@@ -36,6 +36,18 @@
 						echo 'OOPS';
 						
 				} break;
+			
+			case 'chansons' : 
+				switch($method) {			
+					case 'GET':
+						affChansons();
+						break;
+						
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+						
+				} break;
 
 
         default : 

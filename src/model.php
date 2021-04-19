@@ -33,8 +33,9 @@ function getGenre($dbb){
 }
 
 //Recupere la liste de toutes les chansons 
-function getChanson($dbb){
-    $rs = $dbb->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G");
+function getChanson(){
+    $link = connexion();
+    $rs = $link->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
@@ -45,6 +46,17 @@ function getChanson($dbb){
     }
     return $rows;
 }
+/*
+$result=getChanson();
+foreach($result as $key=>$value){
+    foreach($value as $key2=>$value2){
+    echo($key2);
+    echo('<br>');
+    echo($value2);
+    echo('<br>');
+    }
+}
+*/
 
 //Recupere la liste de tous les commentaire par chanson
 function getCom($dbb){

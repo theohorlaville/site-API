@@ -263,10 +263,6 @@ input {
     position: relative;
     z-index: 1;
     width:0vh;
-    display:flex;
-    flex-direction: column;
-    justify-content:center;
-    align-items: center;
     height: auto;
     background-image: linear-gradient(45deg, #da9ff9, #bedcfa);
     transition-duration:1s;
@@ -386,6 +382,14 @@ padding: 0;
     cursor: pointer;
 }
 
+.photo{
+    transition-duration: 0.2s;
+}
+.photo:hover{
+    transition-duration: 0.2s;
+    filter: none;
+}
+
 #retour1{
     position:relative;
 }
@@ -400,7 +404,7 @@ padding: 0;
     align-content: center;
     z-index: 4;
     width: 100vw;
-    height: 100vh;
+    height: auto;
     filter: blur(4px);
 }
 
@@ -416,7 +420,7 @@ padding: 0;
 #interface{
     background-color: rgb(208, 140, 235);
     height: 100%;
-    width: 0 ;
+    width: 0;
     transition: 0.5s ease-out;
 }
 
@@ -580,14 +584,33 @@ padding: 0;
 
 h3{
     text-align: center;
+    margin: 0;
 }
 
 #valide_ajout_bouton, #annul_ajout_bouton {
     margin: 20px;
 }
 
+/*---------------COMMU 4 :  affichage musique ------------------*/
 
-  
+#chansons{
+    background-color: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chanson{
+    margin: 2px;
+    width: 80vw;
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
 /*---------------MEDIA QUERIES-------------------*/
 
 @media (max-width: 768px) {

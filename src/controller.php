@@ -10,7 +10,7 @@
     }
 
     function affChansons(){
-        print json_encode(getChanson($link));
+        echo json_encode(getChanson());
     }
 
     function affCom(){

@@ -35,6 +35,7 @@ const interface=document.querySelector("#interface");
 const interface_bouton = document.querySelector(".interface_bouton");
 const nvl_chanson_bouton = document.querySelector(".nvl_chanson_bouton");
 const annul_ajout_bouton = document.querySelector("#annul_ajout_bouton");
+const chansons=document.querySelector('#affiche_chansons');
 let flagCache=false;
 
 var lyrics=document.createElement("p");
@@ -117,6 +118,7 @@ retour1.addEventListener('click',function(){
   cache.style.opacity=0;
 })
 
+let classPhoto=document.querySelector('.photo');
 let photo1=document.querySelector('#photo1');
 let photo2=document.querySelector('#photo2');
 let photo3=document.querySelector('#photo3');
@@ -125,23 +127,61 @@ let photo5=document.querySelector('#photo5');
 let photo6=document.querySelector('#photo6');
 
 let photo=0;
+
 photo1.addEventListener('click',function(){
   photo=1;
+  photo1.style.width='20%';
+  photo2.style.width='15%';
+  photo3.style.width='15%';
+  photo4.style.width='15%';
+  photo5.style.width='15%';
+  photo6.style.width='15%';
 })
+
 photo2.addEventListener('click',function(){
   photo=2;
+  photo1.style.width='15%';
+  photo2.style.width='20%';
+  photo3.style.width='15%';
+  photo4.style.width='15%';
+  photo5.style.width='15%';
+  photo6.style.width='15%';
 })
 photo3.addEventListener('click',function(){
   photo=3;
+  photo1.style.width='15%';
+  photo2.style.width='15%';
+  photo3.style.width='20%';
+  photo4.style.width='15%';
+  photo5.style.width='15%';
+  photo6.style.width='15%';
 })
 photo4.addEventListener('click',function(){
   photo=4;
+  photo1.style.width='15%';
+  photo2.style.width='15%';
+  photo3.style.width='15%';
+  photo4.style.width='20%';
+  photo5.style.width='15%';
+  photo6.style.width='15%';
 })
 photo5.addEventListener('click',function(){
   photo=5;
+  photo1.style.width='15%';
+  photo2.style.width='15%';
+  photo3.style.width='15%';
+  photo4.style.width='15%';
+  photo5.style.width='20%';
+  photo6.style.width='15%';
 })
 photo6.addEventListener('click',function(){
   photo=6;
+  photo1.style.width='15%';
+  photo2.style.width='15%';
+  photo3.style.width='15%';
+  photo4.style.width='15%';
+  photo5.style.width='15%';
+  photo6.style.width='20%';
 })
 //----------------------CONNEXION----------------------
 
@@ -156,7 +196,6 @@ envoyer.addEventListener('click',function(e){
       verifConnexion(response)
     })
     .catch(error => { console.log(error) });
- 
   }
 
   else
@@ -289,7 +328,34 @@ retourConnexion.addEventListener('click',function(e){
   inscription.style.height='0';
 })
 
-//------------------
+//------------------ AFFICHAGE CHANSONS-------------
+
+commu.addEventListener("click",function(){
+
+  fetch('./src/routeur.php/chansons/')
+  .then(response=>response.json())
+  .then(response=>{
+    afficheChansons(response)
+  })
+  .catch(error => { console.log(error) });
+
+})
+
+function afficheChansons(data){
+  
+  var content = "<div id='chansons'>";
+  // planets is an array of Objects. An array has a method for looping over all elements
+  data.forEach(function (chanson) {
+    // here, we have an object (planet) that represents each line
+    content += "<div class='chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4>";
+    content +="</div>";
+  });
+  content += "</div>";
+  chansons.innerHTML = content;
+}
+
+
+//-------------------------------
 
 
 interface_bouton.addEventListener('click', () => {
