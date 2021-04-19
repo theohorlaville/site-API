@@ -143,9 +143,53 @@ photo5.addEventListener('click',function(){
 photo6.addEventListener('click',function(){
   photo=6;
 })
-  
+//----------------------CONNEXION----------------------
+
 envoyer.addEventListener('click',function(e){
   e.preventDefault();
+  console.log(form2.pseudo.value+','+form2.mdp.value)
+  if(form2.mdp.value!="" && form2.pseudo.value!=""){
+  
+    fetch('./src/routeur.php/connexion/'+form2.pseudo.value+','+form2.mdp.value)
+    .then(response=>response.json())
+    .then(response=>{
+      verifConnexion(response)
+    })
+    .catch(error => { console.log(error) });
+ 
+  }
+
+  else
+  {
+    const erreur="<p>Veuillez remplir chaque champs</p>"
+    info(erreur);
+  }
+
+})
+
+function verifConnexion(data){
+  console.log(data)
+  if(data=='0')
+  {
+    const information='<p>Pseudo ou mot de passe incorrect</p>';
+    info(information)
+    form3.mdp.value='';
+    form3.pseudo.value='';
+    form3.email.value='';
+
+  }
+  if(data=='1')
+  {
+    access();
+    const information='<p>Bienvenue</p>';
+    info(information)
+    form3.mdp.value='';
+    form3.pseudo.value='';
+    form3.email.value='';
+  }
+}
+
+function access(){
   connexion.style.height=0;
   cache.style.opacity=0;
   if(!flagCache){
@@ -156,13 +200,14 @@ envoyer.addEventListener('click',function(e){
   flagCache=true;
   communaute.style.filter='blur(0px)';
 
-})
+}
+
+//----------------------INSCRIPTION----------------------
 
 inscriptionBouton.addEventListener('click',function(){
   connexion.style.height=0;
   inscription.style.height='auto'
 })
-
 
 creaCompte.addEventListener('click',function(e){
   e.preventDefault();
@@ -171,10 +216,10 @@ creaCompte.addEventListener('click',function(e){
   {
   
     console.log(form3.email.value)
-    fetch('./src/routeur.php/users/'+form3.email.value)
+    fetch('./src/routeur.php/inscription/'+form3.email.value)
     .then(response=>response.json())
     .then(response=>{
-      verif(response)})
+      verifInscription(response)})
 
     .catch(error => { console.log(error) });
 
@@ -194,7 +239,7 @@ function ajouteCompte(){
   form.mdp=document.querySelector('.password').value;
   form.photo=photo;
   console.log(JSON.stringify(form))
-  fetch('./src/routeur.php/users', { method: 'POST', body: JSON.stringify(form)})
+  fetch('./src/routeur.php/inscription', { method: 'POST', body: JSON.stringify(form)})
   .catch(error => { console.log(error) });
 
   connexion.style.height='40vh';
@@ -206,7 +251,7 @@ function ajouteCompte(){
   }, 3000)
 }
 
-function verif(data){
+function verifInscription(data){
   console.log(data)
   if(data=='0')
   {
@@ -244,7 +289,7 @@ retourConnexion.addEventListener('click',function(e){
   inscription.style.height='0';
 })
 
-
+//------------------
 
 
 interface_bouton.addEventListener('click', () => {

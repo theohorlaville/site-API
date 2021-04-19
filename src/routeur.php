@@ -6,7 +6,7 @@
 	$method = $_SERVER['REQUEST_METHOD'];
 	
     switch($page[3]) {
-		case 'users' : 
+		case 'inscription' : 
 			switch($method) {
 				case 'POST':
                     $json = file_get_contents('php://input');
@@ -14,7 +14,7 @@
                     break;
 				
 				case 'GET':
-					compareUser($page[4]);
+					compareInscription($page[4]);
 					break;
 					
 				default:
@@ -22,6 +22,21 @@
 					echo 'OOPS';
 					
 			} break;
+
+		
+			case 'connexion' : 
+				switch($method) {			
+					case 'GET':
+						$subpage = explode(',',$page[4]);
+						compareConnexion($subpage[0],$subpage[1]);
+						break;
+						
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+						
+				} break;
+
 
         default : 
 			http_response_code('500');

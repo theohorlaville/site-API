@@ -115,15 +115,18 @@ function likeSorting($dbb){
 //Verifie que l'utilisateur qui tente de se connecter existe PAS FINI
 
 function connexionUser($pseudo,$mdp){
-    $link = connexion();
-    $rs=$link->prepare("SELECT uti_id FROM utilisateurs AS u WHERE (u.pseudo=? && u.mdp=?)");
+    $link = connexion(); 
+    $rs=$link->prepare("SELECT mdp FROM utilisateurs AS u WHERE u.pseudo=? ");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }  
-    return $rs->execute(array($pseudo,$mdp))->fetch();
-}
 
+    $rs->execute(array($pseudo));
+    $result=$rs->fetch();
+    $alors=password_verify($mdp,$result[0]);
+    return $alors;
+}
 
 
 //Recupere la liste des chansons d'un artiste donné

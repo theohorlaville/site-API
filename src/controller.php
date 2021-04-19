@@ -21,7 +21,7 @@
         print json_encode(getUti($link,$id));
     }
 
-    function compareUser($email){
+    function compareInscription($email){
 
         if(addUserVerif($email)==NULL)
         {
@@ -36,12 +36,28 @@
 
     function newUser($form){
         $user = json_decode($form, true);
-        addUser($user['pseudo'],$user['email'], $user['mdp'],$user['photo']);
+        addUser($user['pseudo'],$user['email'], password_hash($user['mdp'], PASSWORD_DEFAULT),$user['photo']);
     }
+
+    function compareConnexion($pseudo,$mdp){
+
+        if(connexionUser($pseudo,$mdp)==FALSE)
+        {
+            echo json_encode('0');
+        }
+
+        else
+        {
+            echo json_encode('1');
+        }
+
+    }
+
+    
 
     //echo compareUser('totosh');
     
-/*
+    /*
     $test = [
         "email" => "test@gmail.com",
         "pseudo" => "theo",
@@ -50,5 +66,5 @@
     ];
     $test=json_encode($test);
     newUser($test);
-*/
+    */
 ?>
