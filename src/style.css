@@ -286,6 +286,7 @@ input {
 
 }
 #message{
+    text-align: center;
     transition-duration: 0.5s;
     position: relative;
     z-index: 5;
@@ -380,7 +381,7 @@ padding: 0;
 }
 
 #photo1, #photo2, #photo3, #photo4, #photo5, #photo6{
-    width: 25%;
+    width: 15%;
     margin: 1px;
     cursor: pointer;
 }
@@ -506,7 +507,7 @@ padding: 0;
     padding: 1%;
     margin: 0 20px 0 0;
 }
-
+/*
 #form4 .search-bar: placeholder-shown {
     color: #e7e7e7ab;
     font-size: 1em;

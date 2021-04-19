@@ -1,3 +1,13 @@
+Document.prototype.ready = callback => {
+	if(callback && typeof callback === 'function') {
+		document.addEventListener("DOMContentLoaded", () =>  {
+			if(document.readyState === "interactive" || document.readyState === "complete") {
+				return callback();
+			}
+		});
+	}
+};
+
 window.addEventListener('load',function(){
 
 const sect1=document.querySelector('#section1');
@@ -106,6 +116,33 @@ retour1.addEventListener('click',function(){
   retour1.style.opacity=0;
   cache.style.opacity=0;
 })
+
+let photo1=document.querySelector('#photo1');
+let photo2=document.querySelector('#photo2');
+let photo3=document.querySelector('#photo3');
+let photo4=document.querySelector('#photo4');
+let photo5=document.querySelector('#photo5');
+let photo6=document.querySelector('#photo6');
+
+let photo=0;
+photo1.addEventListener('click',function(){
+  photo=1;
+})
+photo2.addEventListener('click',function(){
+  photo=2;
+})
+photo3.addEventListener('click',function(){
+  photo=3;
+})
+photo4.addEventListener('click',function(){
+  photo=4;
+})
+photo5.addEventListener('click',function(){
+  photo=5;
+})
+photo6.addEventListener('click',function(){
+  photo=6;
+})
   
 envoyer.addEventListener('click',function(e){
   e.preventDefault();
@@ -118,6 +155,7 @@ envoyer.addEventListener('click',function(e){
     },600);}
   flagCache=true;
   communaute.style.filter='blur(0px)';
+
 })
 
 inscriptionBouton.addEventListener('click',function(){
@@ -125,21 +163,89 @@ inscriptionBouton.addEventListener('click',function(){
   inscription.style.height='auto'
 })
 
+
 creaCompte.addEventListener('click',function(e){
   e.preventDefault();
+ 
+  if(form3.mdp.value!="" && form3.pseudo.value!="" && form3.email.value!="" && photo!=0)
+  {
+  
+    console.log(form3.email.value)
+    fetch('./src/routeur.php/users/'+form3.email.value)
+    .then(response=>response.json())
+    .then(response=>{
+      verif(response)})
+
+    .catch(error => { console.log(error) });
+
+    
+  }
+  else
+  {
+    const erreur="<p>Veuillez remplir chaque champs</p>"
+    info(erreur);
+  }
+})
+
+function ajouteCompte(){
+  const form = {};
+  form.pseudo = document.querySelector('.pseudo').value;
+  form.email = document.querySelector('.email').value;
+  form.mdp=document.querySelector('.password').value;
+  form.photo=photo;
+  console.log(JSON.stringify(form))
+  fetch('./src/routeur.php/users', { method: 'POST', body: JSON.stringify(form)})
+  .catch(error => { console.log(error) });
+
   connexion.style.height='40vh';
   inscription.style.height='0';
+  message.style.opacity='1';
+  message.innerHTML="";
+  setTimeout(function(){
+    message.style.opacity='0';
+  }, 3000)
+}
+
+function verif(data){
+  console.log(data)
+  if(data=='0')
+  {
+    const information='<p>Email déja pris</p>';
+    info(information)
+    form3.mdp.value='';
+    form3.pseudo.value='';
+    form3.email.value='';
+
+  }
+  if(data=='1')
+  {
+    ajouteCompte();
+    const information='<p>Compte créé</p>';
+    info(information)
+    form3.mdp.value='';
+    form3.pseudo.value='';
+    form3.email.value='';
+  }
+}
+
+function info(information){
+  message.innerHTML=information;
   message.style.opacity='1';
   setTimeout(function(){
     message.style.opacity='0';
   }, 3000)
-})
+
+}
+
 
 retourConnexion.addEventListener('click',function(e){
   e.preventDefault();
   connexion.style.height='40vh';
   inscription.style.height='0';
 })
+
+
+
 
 interface_bouton.addEventListener('click', () => {
   interface.classList.toggle('displayed');
