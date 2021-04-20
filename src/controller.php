@@ -20,6 +20,15 @@
     function affUti($id){
         print json_encode(getUti($link,$id));
     }
+    
+    function affInfoUti($id){
+        echo json_encode(getInfoUti($id));
+    }
+
+    /*
+    function affPhotoUti($id){
+        print json_encode(getPhotoUti($link,$id));
+    }*/
 
     function compareInscription($email){
 

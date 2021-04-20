@@ -419,18 +419,69 @@ padding: 0;
 
 #interface{
     background-color: rgb(208, 140, 235);
-    height: 100%;
-    width: 0;
+    height: inherit;
+    width: 0 ;
     transition: 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
 }
 
 #interface.displayed {
     width: 20% ;
+    height: inherit;
 }
 
-.interface_bouton{
+#interface.displayed #deco_bouton, #interface.displayed #pdp, #interface.displayed #pseudo {
+    transform:translateX(0) ;
+    transition: 0.35s ease-out;
+}
+
+#interface #pdp {
+    padding: 10px;
+    transform:translateX(-200px) ;
+}
+
+#interface #pdp #photo_uti{
+    width: 100%;
+    height: 100%;
+}
+
+#boutons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+#interface_bouton {
     cursor: pointer;
-    background: url(../assets/left_arrow.png) no-repeat center left 5px;
+    background-size: 7.5px;
+    color: #e7e7e7;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    top: calc(14vh + 2%);
+    background: url(../assets/left_arrow_petit.png) no-repeat center left 5px;
+    left: 2.5%;
+    padding: 15px 15px 15px 20px;
+}
+
+#lyrimacs_bouton{ 
+    cursor: pointer;
+    background-size: 7.5px;
+    color: #e7e7e7;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    top: calc(14vh + 2%);
+    right: 2.5%;
+    padding: 15px 20px 15px 15px;
+    background: url(../assets/right_arrow_petit.png) no-repeat center right 5px;
+}
+
+
+#interface #deco_bouton{
+    cursor: pointer;
     background-size: 7.5px;
     color: #e7e7e7;
     font-size: 1em;
@@ -438,7 +489,24 @@ padding: 0;
     align-items: center;
     top: calc(14vh + 2%);
     left: 2.5%;
-    padding: 15px 15px 15px 20px;
+    padding-inline-start:45%;
+    padding-block-start: 10px;
+    transform:translateX(-200px) ;
+}
+
+
+#interface #pseudo {
+    color: #e7e7e7;
+    font-size: 3em;
+    display: flex;
+    padding: 10px;
+    transform:translateX(-200px) ;
+    margin-block-start: 0;
+}
+
+h4{
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 #accueil{
@@ -519,7 +587,7 @@ padding: 0;
 
 /*---------------COMMU 3 :  affiche /ajoute chanson ------------------*/
 
-.nvl_chanson_bouton {
+#nvl_chanson_bouton {
     cursor: pointer;
     background: url(../assets/plus.png) no-repeat center left 5px;
     background-size: 10px;
@@ -527,8 +595,6 @@ padding: 0;
     font-size: 1em;
     display: flex;
     align-items: center;
-    position : absolute;
-    bottom: 2.5%;
     right: 2.5%;
     padding: 15px 15px 15px 20px;
 }
@@ -539,15 +605,18 @@ padding: 0;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    width: 100%-10vw;
-    height: 50vh;
-    transform: translateY(50vw);
+    width: 100%;
+    height: 0;
+    position: relative;
+    box-sizing: border-box;
     transition: 0.5s ease-out;
+    overflow: hidden;
 }
 
 #ajoute_chanson.displayed {
-    transform: translateY(0);
+    height: 200px;
 }
+
 
 #form5 {
     display: flex;
@@ -594,7 +663,6 @@ h3{
 /*---------------COMMU 4 :  affichage musique ------------------*/
 
 #chansons{
-    background-color: #1e1e1e;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -604,11 +672,10 @@ h3{
 .chanson{
     margin: 2px;
     width: 80vw;
-    background-color: blue;
+    background-color: #ffbdeb;
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .commentaire{

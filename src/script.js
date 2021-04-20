@@ -32,9 +32,13 @@ const retourConnexion=document.querySelector("#retour-connexion");
 const user=document.querySelector("#user");
 const communaute=document.querySelector("#communaute");
 const interface=document.querySelector("#interface");
-const interface_bouton = document.querySelector(".interface_bouton");
-const nvl_chanson_bouton = document.querySelector(".nvl_chanson_bouton");
+const interface_bouton = document.querySelector("#interface_bouton");
+const pdp = document.querySelector("#interface #pdp ");
+const pseudo = document.querySelector("#interface #pseudo");
+const nvl_chanson_bouton = document.querySelector("#nvl_chanson_bouton");
 const annul_ajout_bouton = document.querySelector("#annul_ajout_bouton");
+const deco_bouton = document.querySelector("#deco_bouton");
+const lyrimacs_bouton = document.querySelector("#lyrimacs_bouton");
 const chansons=document.querySelector('#affiche_chansons');
 let flagCache=false;
 
@@ -113,12 +117,14 @@ retour2.addEventListener('click',function(){
 /*---------------------------------------------------S2------------------------------------------------------------- */
 
 
-retour1.addEventListener('click',function(){
+retour1.addEventListener('click', function () {
   sect1.style.width=100+'vw';
   sect3.style.width=0+'vw';
   retour1.style.opacity=0;
   cache.style.opacity=0;
-})
+});
+
+
 
 let classPhoto=document.querySelector('.photo');
 let photo1=document.querySelector('#photo1');
@@ -218,10 +224,8 @@ function verifConnexion(data){
     form3.mdp.value='';
     form3.pseudo.value='';
     form3.email.value='';
-
   }
-  if(data=='1')
-  {
+  else {
     access();
     const information='<p>Bienvenue</p>';
     info(information)
@@ -241,7 +245,6 @@ function access(){
     },600);}
   flagCache=true;
   communaute.style.filter='blur(0px)';
-
 }
 
 //----------------------INSCRIPTION----------------------
@@ -358,13 +361,45 @@ function afficheChansons(data){
 }
 
 
-//-------------------------------
+//-------------------------------Interface ------------------
 
+
+function afficheInfo(data){
+  let content = " <img id='photo_uti' src='./assets/"+ data.photo_num +".png' > " ;
+  pdp.innerHTML = content;
+  let content2= "<h4>"+ data.pseudo +"</h4>" ;
+  pseudo.innerHTML = content2 ;
+}
 
 interface_bouton.addEventListener('click', () => {
+
   interface.classList.toggle('displayed');
   accueil.classList.toggle('displayed');
   document.querySelector('html body').style.overflowY = 'scroll';
+
+  console.log(id_utilisateur)
+  fetch('./src/routeur.php/user/'+ id_utilisateur)
+  .then(response=>response.json())
+  .then(response=>{
+    afficheInfo(response);
+  })
+  .catch(error => { console.log(error) });
+
+  
+});
+
+deco_bouton.addEventListener('click', function() {
+  sect1.style.width=100+'vw';
+  sect3.style.width=0+'vw';
+  retour1.style.opacity=0;
+  cache.style.opacity=0;
+});
+
+lyrimacs_bouton.addEventListener('click',function () {
+  sect1.style.width=100+'vw';
+  sect3.style.width=0+'vw';
+  retour1.style.opacity=0;
+  cache.style.opacity=0;
 });
 
 nvl_chanson_bouton.addEventListener('click', () => {
@@ -378,7 +413,7 @@ annul_ajout_bouton.addEventListener('click', () => {
 });
 
 
-})
+});
 
 
 

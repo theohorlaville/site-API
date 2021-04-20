@@ -84,6 +84,37 @@ function getUti($dbb,$id){
     return $userinfo['mail'];
 }
 
+//Recupere le pseudo de l'utilisateur dont on donne l'id
+function getInfoUti($id){
+    $link=connexion();
+	$rs = $link->prepare("SELECT pseudo, photo_num FROM utilisateurs AS u WHERE u.id_Uti=? ");
+	if (!$rs) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rs->execute(array($id));
+    $userinfo = $rs->fetch(PDO::FETCH_ASSOC);
+    return $userinfo;
+}
+
+/*
+$result = getPseudoUti('7');
+foreach($result[0] as $value){
+    echo $value;
+}*/
+
+//Recupere le num de la photo de l'utilisateur dont on donne l'id
+/*function getPhotoUti($dbb,$id){
+	$rs = $dbb->prepare("SELECT photo_num FROM utilisateurs WHERE id_Uti = ?");
+	if (!$rs) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rs->execute(array($id));
+    $userinfo = $rs->fetch();
+    return $userinfo[0];
+}*/
+
 //Ajoute un artiste a la bdd grace a son nom
 function addArtiste($dbb, $artiste){
 	$rs=$dbb->prepare("INSERT INTO `artistes` (`id_Art`, `artiste`) VALUES (NULL, ?);");

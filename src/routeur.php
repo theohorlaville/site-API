@@ -49,6 +49,18 @@
 						
 				} break;
 
+			case 'user' : 
+				switch($method) {			
+					case 'GET':
+						affInfoUti($page[4]);
+						break;
+						
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+						
+				} break;
+
 
         default : 
 			http_response_code('500');
