@@ -42,10 +42,16 @@
 					case 'GET':
 						affChansons();
 						break;
-						
+					
+					case 'POST':
+						$json = file_get_contents('php://input');
+						newChanson($json);
+						break;
+							
 					default:
 						http_response_code('404');
 						echo 'OOPS';
+						
 						
 				} break;
 

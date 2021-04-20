@@ -583,6 +583,9 @@ h4{
 #form4 .search-bar: placeholder-shown {
     color: #e7e7e7ab;
     font-size: 1em;
+}*/
+#form5 option{
+    background-color: black;
 }
 
 /*---------------COMMU 3 :  affiche /ajoute chanson ------------------*/

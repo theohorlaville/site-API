@@ -35,7 +35,7 @@ function getGenre($dbb){
 //Recupere la liste de toutes les chansons 
 function getChanson(){
     $link = connexion();
-    $rs = $link->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G");
+    $rs = $link->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G ORDER BY id_Ch DESC");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
@@ -72,17 +72,6 @@ function getCom($dbb){
     return $rows;
 }
 
-//Recupere l'utilisateur dont on donne l'id
-function getUti($dbb,$id){
-	$rs = $dbb->prepare("SELECT * FROM utilisateurs WHERE id_Uti = ?");
-	if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rs->execute(array($id));
-    $userinfo = $rs->fetch();
-    return $userinfo['mail'];
-}
 
 //Recupere le pseudo de l'utilisateur dont on donne l'id
 function getInfoUti($id){
@@ -116,23 +105,32 @@ foreach($result[0] as $value){
 }*/
 
 //Ajoute un artiste a la bdd grace a son nom
-function addArtiste($dbb, $artiste){
-	$rs=$dbb->prepare("INSERT INTO `artistes` (`id_Art`, `artiste`) VALUES (NULL, ?);");
-	if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
+function addArtiste($artiste){
+    $link=connexion();
+    $rs=$link->prepare("SELECT `artiste` FROM artistes where artistes.artiste=?");
+    $rs->execute(array($artiste));
+    $result=$rs->fetch(PDO::FETCH_ASSOC);
+
+    if(!$result){
+	$rs=$link->prepare("INSERT INTO `artistes` (`id_Art`, `artiste`) VALUES (NULL, ?);");
 	$rs->execute(array($artiste));
+    }
 }
+ 
 
 //Ajoute une musique dans la bdd grace a son titre, son artiste associé et son genre
-function addMusic($dbb, $titre, $artiste, $genre){
-	$rs=$dbb->prepare("INSERT INTO `chansons` (`id_Ch`, `titre`, `art_id`, `gen_id`) VALUES (NULL, ?, ,?,?);");
-	if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-	$rs->execute(array($titre,$artiste,$genre));
+function addMusic($titre, $artiste, $genre){
+    $link = connexion(); 
+
+    $rs=$link->prepare("SELECT `id_Art` FROM artistes as a WHERE a.artiste=?");
+    $rs->execute(array($artiste));
+    $idArtiste=$rs->fetch();
+
+   
+	$rs=$link->prepare("INSERT INTO `chansons` (`id_Ch`, `titre`, `art_id`, `gen_id`) VALUES (NULL, ?, ?,?);");
+    $rs->execute(array($titre,$idArtiste[0],$genre));
+    
+    return getChanson();
 }
 
 

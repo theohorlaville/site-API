@@ -9,6 +9,23 @@
         print json_encode(getGenre($link));
     }
 
+    function newChanson($form){
+        $song = json_decode($form, true);
+        addArtiste($song['artiste']);
+        addMusic($song['titre'],$song['artiste'],$song['genre']);
+        echo json_encode(getChanson());
+    }
+
+    /*
+    $test = [
+        "artiste" => "PNL",
+        "titre" => "au DD",
+        "genre"=>"4",
+    ];
+    $test=json_encode($test);
+    newChanson($test);
+    */
+
     function affChansons(){
         echo json_encode(getChanson());
     }
@@ -61,6 +78,7 @@
         }
 
     }
+
 
     
 

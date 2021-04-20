@@ -56,20 +56,6 @@ form1.addEventListener('submit',function(e){
     parole();
 });
 
-commu.addEventListener("click",function(){
-  sect1.style.width=0+'vw';
-  sect3.style.width=100+'vw';
-  retour1.style.opacity=1;
-  if(!flagCache){
-  setTimeout(function(){
-    cache.style.opacity='40%';
-  },800);}
-  if(!flagCache){
-    setTimeout(function(){
-      cache.style.display='block';
-    },900);}
-
-})
 
 function parole(){
     
@@ -116,6 +102,25 @@ retour2.addEventListener('click',function(){
 
 /*---------------------------------------------------S2------------------------------------------------------------- */
 
+commu.addEventListener("click",function(){
+  
+  sect3.style.display='block';
+  setTimeout(function(){
+    sect1.style.width=0+'vw';
+    sect3.style.width=100+'vw';
+  },1);
+
+  retour1.style.opacity=1;
+  if(!flagCache){
+  setTimeout(function(){
+    cache.style.opacity='40%';
+  },800);}
+  if(!flagCache){
+    setTimeout(function(){
+      cache.style.display='block';
+    },900);}
+
+})
 
 retour1.addEventListener('click', function () {
   sect1.style.width=100+'vw';
@@ -191,7 +196,16 @@ photo6.addEventListener('click',function(){
   photo5.style.width='15%';
   photo6.style.width='20%';
 })
+
+
+
+
+
 //----------------------CONNEXION----------------------
+
+
+
+
 
 envoyer.addEventListener('click',function(e){
   e.preventDefault();
@@ -247,7 +261,15 @@ function access(){
   communaute.style.filter='blur(0px)';
 }
 
+
+
+
+
 //----------------------INSCRIPTION----------------------
+
+
+
+
 
 inscriptionBouton.addEventListener('click',function(){
   connexion.style.height=0;
@@ -334,7 +356,14 @@ retourConnexion.addEventListener('click',function(e){
   inscription.style.height='0';
 })
 
+
+
+
 //------------------ AFFICHAGE CHANSONS-------------
+
+
+
+
 
 commu.addEventListener("click",function(){
 
@@ -361,7 +390,48 @@ function afficheChansons(data){
 }
 
 
+
+//------------------ Ajout CHANSONS-------------
+
+
+
+
+const genre=document.querySelector('.genre');
+const ajout_chanson=document.querySelector('#valide_ajout_bouton');
+const form5=document.querySelector("#form5");
+ajout_chanson.addEventListener('click',function(e){
+  e.preventDefault();
+
+  console.log(form5.titre.value);
+  console.log(form5.artiste.value);
+  console.log(genre.options[genre.selectedIndex].value);
+
+  if(form5.artiste.value!="" && form5.titre.value!="") {
+    const form = {};
+    form.titre = document.querySelector('.barre-titre').value;
+    form.artiste = document.querySelector('.barre-artiste').value;
+    form.genre= genre.options[genre.selectedIndex].value;
+
+    console.log(JSON.stringify(form))
+    fetch('./src/routeur.php/chansons', { method: 'POST', body: JSON.stringify(form)})
+    .then(response=>response.json())
+    .then(response=>{
+    afficheChansons(response)
+  })
+    .catch(error => { console.log(error) });
+  }
+  else { alert('Veuillez remplir tous les champs')}
+
+
+})
+
+
+
+
 //-------------------------------Interface ------------------
+
+
+
 
 
 function afficheInfo(data){
@@ -398,8 +468,12 @@ deco_bouton.addEventListener('click', function() {
 lyrimacs_bouton.addEventListener('click',function () {
   sect1.style.width=100+'vw';
   sect3.style.width=0+'vw';
+
   retour1.style.opacity=0;
   cache.style.opacity=0;
+  setTimeout(function(){
+    sect3.style.display='none';
+  },900);
 });
 
 nvl_chanson_bouton.addEventListener('click', () => {
