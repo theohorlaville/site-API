@@ -92,17 +92,6 @@ foreach($result[0] as $value){
     echo $value;
 }*/
 
-//Recupere le num de la photo de l'utilisateur dont on donne l'id
-/*function getPhotoUti($dbb,$id){
-	$rs = $dbb->prepare("SELECT photo_num FROM utilisateurs WHERE id_Uti = ?");
-	if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rs->execute(array($id));
-    $userinfo = $rs->fetch();
-    return $userinfo[0];
-}*/
 
 //Ajoute un artiste a la bdd grace a son nom
 function addArtiste($artiste){
@@ -251,6 +240,7 @@ function addFav($numCh, $user){
     }
     $rqt->execute(array($user,$numCh));
 
+    return getChanson();
 }
 
 function supprFav($numCh, $user){
@@ -261,6 +251,8 @@ function supprFav($numCh, $user){
         exit;
     }
     $rqt->execute(array($user,$numCh));
+
+    return getChanson();
 }
 
 function favVerif($idCh,$user){
@@ -320,7 +312,5 @@ function addUserVerif($email){
     $result=$rs->fetch();
     return $result;
 }
-
-
 
 ?>

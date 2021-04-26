@@ -370,7 +370,7 @@ retourConnexion.addEventListener('click',function(e){
 //------------------ AFFICHAGE CHANSONS-------------
 
 
-let val=0;
+
 
 
 document.ready(affichage())
@@ -394,55 +394,52 @@ function afficheChansons(response,numChanson){
   var content = "<div id='chansons'>";
 
   response.forEach(function (chanson) {
-    verifFav(chanson.id_Ch);
-    numChanson=chanson.id_Ch;
-    content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
-    content += "<div class='commentaire'>";
+  
     
-    if(val==1)
-    {
-      content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
-    }
-    if(val==0)
-    {
-      content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
-    }
-    
-    content += "</div></div>";
+    verifFav(chanson.id_Ch).then(json => {
+      console.log()
+      numChanson=chanson.id_Ch;
+      content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
+      content += "<div class='commentaire'>";
+      
+      if(json)
+      {
+        //console.log(numChanson)
+        content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
+      }
+      else
+      {
+        //console.log(numChanson)
+        content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
+      }
+      
+      content += "</div></div>";
+      chansons.innerHTML = content;
+    });
+   
   
   });
-
-  chansons.innerHTML = content;
+  
  
 }
 
-
-function verifFav(idChanson){ 
+async function verifFav(idChanson){ 
+    
+    let reponse = await fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur);
+    let json= await reponse.json();
+    
+  return json;   
+}
 
   
-  fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur)
-    .then(data=>data.json())
-    .then(data=>{
-     
-     if(data==false){ val=0}
-     else {val=1}
-     
-     console.log(val)
-    })
-    .catch(error => { console.log(error) });
-    
-
-    
-    
-  }
-
+ 
 //------------------ Ajout FAVORI-------------
 
 function addFav(numChanson){
+  console.log(numChanson)
   const form={};
   form.numCh=numChanson;
   form.user=id_utilisateur;
-  console.log('add' +form);
   fetch('./src/routeur.php/fav', { method: 'POST', body: JSON.stringify(form)})
   .then(response=>response.json())
   .then(response=>{
@@ -457,7 +454,6 @@ function supprFav(numChanson){
   const form={};
   form.numCh=numChanson;
   form.user=id_utilisateur;
-  console.log('del' +form);
   fetch('./src/routeur.php/fav', { method: 'DELETE', body: JSON.stringify(form)}) // peut être devoir faire passer par l'uri 
   .then(response=>response.json())
   .then(response=>{

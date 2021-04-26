@@ -19,8 +19,6 @@
         echo json_encode(favVerif($idCh,$user));
     }
 
-    
-
     function delFav($form){
         $fav= json_decode($form, true);
         supprFav($fav['numCh'],$fav['user']);
