@@ -67,6 +67,30 @@
 						
 				} break;
 
+			case 'fav' : 
+				switch($method) {			
+					case 'GET':
+						$subpage = explode(',',$page[4]);
+						compareFav($subpage[0],$subpage[1]);
+						break;
+						
+					case 'POST':
+						$json = file_get_contents('php://input');
+						newFav($json);
+						break;
+
+					case 'DELETE':
+						$json = file_get_contents('php://input');
+						delFav($json);
+						break;
+
+						
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+						
+				} break;
+
 
         default : 
 			http_response_code('500');

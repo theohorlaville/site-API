@@ -8,8 +8,6 @@ Document.prototype.ready = callback => {
 	}
 };
 
-window.addEventListener('load',function(){
-
 const sect1=document.querySelector('#section1');
 const sect2=document.querySelector('#section2');
 const sect3=document.querySelector('#section3');
@@ -40,9 +38,14 @@ const annul_ajout_bouton = document.querySelector("#annul_ajout_bouton");
 const deco_bouton = document.querySelector("#deco_bouton");
 const lyrimacs_bouton = document.querySelector("#lyrimacs_bouton");
 const chansons=document.querySelector('#affiche_chansons');
+const accueil=document.querySelector('#accueil')
 let flagCache=false;
 
+
+//---------Utilisateur connecté --------//
 let id_utilisateur=0;
+
+/*---------------------------------------------------S1------------------------------------------------------------- */
 
 var lyrics=document.createElement("p");
 var request = new XMLHttpRequest();
@@ -102,12 +105,16 @@ retour2.addEventListener('click',function(){
 
 /*---------------------------------------------------S2------------------------------------------------------------- */
 
+
+accueil.style.display='none'; // cache les musiques au début pour pas que l'écran descende dans la page d'accueil
+
 commu.addEventListener("click",function(){
   
   sect3.style.display='block';
   setTimeout(function(){
     sect1.style.width=0+'vw';
     sect3.style.width=100+'vw';
+    accueil.style.display='block';
   },1);
 
   retour1.style.opacity=1;
@@ -125,6 +132,7 @@ commu.addEventListener("click",function(){
 retour1.addEventListener('click', function () {
   sect1.style.width=100+'vw';
   sect3.style.width=0+'vw';
+  accueil.style.display='none';
   retour1.style.opacity=0;
   cache.style.opacity=0;
 });
@@ -209,7 +217,6 @@ photo6.addEventListener('click',function(){
 
 envoyer.addEventListener('click',function(e){
   e.preventDefault();
-  console.log(form2.pseudo.value+','+form2.mdp.value)
   if(form2.mdp.value!="" && form2.pseudo.value!=""){
   
     fetch('./src/routeur.php/connexion/'+form2.pseudo.value+','+form2.mdp.value)
@@ -230,7 +237,7 @@ envoyer.addEventListener('click',function(e){
 
 function verifConnexion(data){
   id_utilisateur=data;
-  console.log(id_utilisateur)
+  console.log('Utilisateur connecté :'+id_utilisateur)
   if(data=='0')
   {
     const information='<p>Pseudo ou mot de passe incorrect</p>';
@@ -250,6 +257,7 @@ function verifConnexion(data){
 }
 
 function access(){
+  affichage();
   connexion.style.height=0;
   cache.style.opacity=0;
   if(!flagCache){
@@ -362,34 +370,101 @@ retourConnexion.addEventListener('click',function(e){
 //------------------ AFFICHAGE CHANSONS-------------
 
 
+let val=0;
 
 
+document.ready(affichage())
 
-commu.addEventListener("click",function(){
-
+function affichage(){
+  
+  let numChanson;
   fetch('./src/routeur.php/chansons/')
   .then(response=>response.json())
   .then(response=>{
-    afficheChansons(response)
+    afficheChansons(response,numChanson)
   })
   .catch(error => { console.log(error) });
-
-})
-
-function afficheChansons(data){
   
-  var content = "<div id='chansons'>";
-  // planets is an array of Objects. An array has a method for looping over all elements
-  data.forEach(function (chanson) {
-    // here, we have an object (planet) that represents each line
-    content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div><div class='commentaire'></div>";
-    content += "</div>";
-  });
-
-  chansons.innerHTML = content;
 }
 
 
+function afficheChansons(response,numChanson){
+
+  
+  var content = "<div id='chansons'>";
+
+  response.forEach(function (chanson) {
+    verifFav(chanson.id_Ch);
+    numChanson=chanson.id_Ch;
+    content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
+    content += "<div class='commentaire'>";
+    
+    if(val==1)
+    {
+      content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
+    }
+    if(val==0)
+    {
+      content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
+    }
+    
+    content += "</div></div>";
+  
+  });
+
+  chansons.innerHTML = content;
+ 
+}
+
+
+function verifFav(idChanson){ 
+
+  
+  fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur)
+    .then(data=>data.json())
+    .then(data=>{
+     
+     if(data==false){ val=0}
+     else {val=1}
+     
+     console.log(val)
+    })
+    .catch(error => { console.log(error) });
+    
+
+    
+    
+  }
+
+//------------------ Ajout FAVORI-------------
+
+function addFav(numChanson){
+  const form={};
+  form.numCh=numChanson;
+  form.user=id_utilisateur;
+  console.log('add' +form);
+  fetch('./src/routeur.php/fav', { method: 'POST', body: JSON.stringify(form)})
+  .then(response=>response.json())
+  .then(response=>{
+  afficheChansons(response)
+})
+  
+}
+
+//------------------ Supprimme FAVORI-------------
+
+function supprFav(numChanson){
+  const form={};
+  form.numCh=numChanson;
+  form.user=id_utilisateur;
+  console.log('del' +form);
+  fetch('./src/routeur.php/fav', { method: 'DELETE', body: JSON.stringify(form)}) // peut être devoir faire passer par l'uri 
+  .then(response=>response.json())
+  .then(response=>{
+  afficheChansons(response)
+})
+  
+}
 
 //------------------ Ajout CHANSONS-------------
 
@@ -487,7 +562,7 @@ annul_ajout_bouton.addEventListener('click', () => {
 });
 
 
-});
+
 
 
 

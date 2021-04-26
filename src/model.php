@@ -240,6 +240,43 @@ function getLikeChanson($bdd, $titre){
     return $nbLike['count'];
 }
 
+// Ajoute un like à une musique
+
+function addFav($numCh, $user){
+    $link = connexion();
+    $rqt = $link->prepare('INSERT INTO `favoris` (`uti_id`, `ch_id`) VALUES (?,?);');
+    if (!$rqt) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rqt->execute(array($user,$numCh));
+
+}
+
+function supprFav($numCh, $user){
+    $link = connexion();
+    $rqt = $link->prepare('DELETE FROM `favoris` WHERE `favoris`.`uti_id` = ? AND `favoris`.`ch_id` = ?');
+    if (!$rqt) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rqt->execute(array($user,$numCh));
+}
+
+function favVerif($idCh,$user){
+    $link = connexion();
+    $rs = $link->prepare('SELECT `uti_id` FROM `favoris` WHERE `favoris`.`uti_id` = ? AND `favoris`.`ch_id` = ?');
+    if (!$rs) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rs->execute(array($user,$idCh));
+    $result=$rs->fetch();
+    return $result;
+}
+
+
+
 //Recupere les like d'un utilisateur
 function getLikeUtilisateur($dbb, $idUti){
     $rs = $dbb->prepare("SELECT titre,artiste FROM chansons AS c 

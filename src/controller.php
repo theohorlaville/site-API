@@ -9,6 +9,24 @@
         print json_encode(getGenre($link));
     }
 
+    function newFav($form){
+        $fav= json_decode($form, true);
+        addFav($fav['numCh'],$fav['user']);
+        echo json_encode(getChanson());
+    }
+
+    function compareFav($idCh,$user){
+        echo json_encode(favVerif($idCh,$user));
+    }
+
+    
+
+    function delFav($form){
+        $fav= json_decode($form, true);
+        supprFav($fav['numCh'],$fav['user']);
+        echo json_encode(getChanson());
+    }
+
     function newChanson($form){
         $song = json_decode($form, true);
         addArtiste($song['artiste']);

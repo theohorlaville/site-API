@@ -139,7 +139,7 @@ input {
     background-color:#9aaad7;
     color:#fcf8ec;
     font-family: 'Bebas Neue', cursive;
-    margin:10px;
+    margin:10px 0px;
     border: 0px;
     transition-duration: 0.2s;
 }
@@ -690,6 +690,10 @@ h3{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#like{
+    width: 8%;
 }
 
 /*---------------MEDIA QUERIES-------------------*/
