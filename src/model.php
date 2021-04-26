@@ -32,10 +32,28 @@ function getGenre($dbb){
     return $rows;
 }
 
-//Recupere la liste de toutes les chansons 
+//Recupere la liste de toutes les chansons par ordre d'ajout
 function getChanson(){
     $link = connexion();
     $rs = $link->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G ORDER BY id_Ch DESC");
+    if (!$rs) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rows = array();
+    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
+        $rows[] = $r;
+    }
+    return $rows;
+}
+
+//Récupère les chansons triées par nb de fav
+function getChansonTriParFav(){
+    $link = connexion();
+    $rs = $link->query("SELECT titre, artiste , COUNT(*) FROM chansons AS c
+                            JOIN favoris AS f ON (c.id_Ch =f.ch_id) 
+                            JOIN artistes as a ON(a.id_Art=c.art_id)
+                        GROUP BY titre, ch_id ORDER BY (COUNT(*)) DESC");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;

@@ -436,6 +436,39 @@ function verifFav(idChanson){
     
   }
 
+  //--tri par nombre de Favoris---
+function affichageParFav(){
+
+  let numChanson;
+  fetch('./src/routeur.php/triParFav/')
+  .then(response=>response.json())
+  .then(response=>{
+    afficheChansonsTriParFav(response)
+  })
+  .catch(error => { console.log(error) });
+  
+}
+
+function afficheChansonsTriParFav(response){
+
+  
+  var content = "<div id='chansons'>";
+
+  response.forEach(function (chanson) {
+    content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
+    content += "<div class='commentaire'>";
+    
+    //suppr like au click
+    content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
+
+    content += "</div></div>";
+  
+  });
+
+  chansons.innerHTML = content;
+ 
+}
+
 //------------------ Ajout FAVORI-------------
 
 function addFav(numChanson){
