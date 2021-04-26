@@ -606,7 +606,19 @@ annul_ajout_bouton.addEventListener('click', () => {
 });
 
 
+const ajout=document.querySelector('#triAjout');
+const fav=document.querySelector('#triFav');
+fav.addEventListener('click',function(e){
+  e.preventDefault();
+  console.log('testafav');
+  affichageParFav();
+})
+ajout.addEventListener('click',function(e){
+  e.preventDefault();
+  console.log('testajout');
+  affichage();
 
+});
 
 
 
