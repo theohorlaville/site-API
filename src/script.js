@@ -387,6 +387,25 @@ function affichage(){
   
 }
 
+const form4=document.querySelector('#form4');
+const search_type=document.querySelector('.search-type');
+
+rechercher.addEventListener("click", function(e){
+  e.preventDefault();
+  if(form4.nom.value != ""){
+    const form= {};
+    form.nom= form4.nom.value;
+    form.search_type=search_type.options[search_type.selectedIndex].value;
+    //console.log('./src/routeur.php/chansons/'+form.search_type+"/"+form.nom);
+    fetch('./src/routeur.php/chansons/'+form.search_type+"/"+form.nom )
+    .then(response=>response.json())
+    .then(response=>{
+      afficheChansons(response);
+    })
+    .catch(error => { console.log(error) });
+  }
+})
+
 
 function afficheChansons(response,numChanson){
 

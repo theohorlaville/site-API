@@ -167,31 +167,36 @@ function connexionUser($pseudo,$mdp){
 
 
 //Recupere la liste des chansons d'un artiste donné
-function getChansonParArtiste($bdd, $artiste){
-    $rs = $dbb->query("SELECT * FROM chansons AS c 
+function getChansonParArtiste($artiste){
+    $link = connexion();
+    $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
     JOIN artistes AS a ON (c.art_id=a.id_Art) 
-        WHERE a.artiste LIKE %?%");
+        WHERE a.artiste LIKE ?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
-    $rows = array($artiste);
+
+    $rs->execute(array($artiste));  
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }
     return $rows;
 }
 
+
 //Recupere la liste des chansons ayant le titre donné
-function getChansonParTitre($bdd, $titre){
-    $rs = $dbb->query("SELECT a.artiste, c.titre FROM chansons AS c 
+function getChansonParTitre($titre){
+    $link = connexion();
+    $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
     JOIN artistes AS a ON (c.art_id=a.id_Art)
-        WHERE c.titre LIKE %?%");
+        WHERE c.titre LIKE ?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
-    $rows = array($titre);
+
+    $rs->execute(array($titre));
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }

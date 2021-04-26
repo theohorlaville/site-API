@@ -41,6 +41,13 @@
     $test=json_encode($test);
     newChanson($test);
     */
+    function affChansonsParArtiste($nom){
+        echo json_encode(getChansonParArtiste($nom));
+    }
+
+    function affChansonsParTitre($titre){
+        echo json_encode(getChansonParTitre($titre));
+    }
 
     function affChansons(){
         echo json_encode(getChanson());
