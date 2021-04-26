@@ -115,7 +115,18 @@
 						echo 'OOPS';
 						
 				} break;
-
+					
+		case 'triParFav':
+			switch($method) {			
+				case 'GET':
+					affChansonsTriParFav();
+					break;
+						
+				default:
+					http_response_code('404');
+					echo 'OOPS';
+						
+			} break;
 
         default : 
 			http_response_code('500');

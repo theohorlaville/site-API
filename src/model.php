@@ -46,6 +46,26 @@ function getChanson(){
     }
     return $rows;
 }
+
+
+//Récupère les chansons triées par nb de fav
+function getChansonTriParFav(){
+    $link = connexion();
+    $rs = $link->query("SELECT titre, artiste FROM chansons AS c
+                            JOIN favoris AS f ON (c.id_Ch =f.ch_id) 
+                            JOIN artistes as a ON(a.id_Art=c.art_id)
+                        GROUP BY titre, ch_id ORDER BY (COUNT(*)) DESC");
+    if (!$rs) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rows = array();
+    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
+        $rows[] = $r;
+    }
+    return $rows;
+}
+
 /*
 $result=getChanson();
 foreach($result as $key=>$value){
@@ -122,25 +142,6 @@ function addMusic($titre, $artiste, $genre){
     return getChanson();
 }
 
-
-//Trie par nombre de like
-function likeSorting($dbb){
-    $rs=$dbb->prepare("SELECT titre, artiste , COUNT(*) 
-    FROM chansons AS c
-    JOIN favoris AS f ON (c.id_Ch =f.ch_id) 
-    JOIN artistes as a ON(a.id_Art=c.art_id)
-    GROUP BY titre, ch_id
-    ORDER BY (COUNT(*)) DESC"); 
-    if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rows = array();
-    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
-        $rows[] = $r;
-    }
-    return $rows;
-}
 
 //Verifie que l'utilisateur qui tente de se connecter existe PAS FINI
 
