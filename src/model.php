@@ -32,7 +32,7 @@ function getGenre($dbb){
     return $rows;
 }
 
-//Recupere la liste de toutes les chansons 
+//Recupere la liste de toutes les chansons triées par date d'ajout
 function getChanson(){
     $link = connexion();
     $rs = $link->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G ORDER BY id_Ch DESC");
@@ -46,7 +46,6 @@ function getChanson(){
     }
     return $rows;
 }
-
 
 //Récupère les chansons triées par nb de fav
 function getChansonTriParFav(){
@@ -65,7 +64,6 @@ function getChansonTriParFav(){
     }
     return $rows;
 }
-
 /*
 $result=getChanson();
 foreach($result as $key=>$value){
