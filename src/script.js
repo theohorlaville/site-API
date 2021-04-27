@@ -151,6 +151,7 @@ let photo=0;
 
 photo1.addEventListener('click',function(){
   photo=1;
+  console.log('tu las bg');
   photo1.style.width='20%';
   photo2.style.width='15%';
   photo3.style.width='15%';
@@ -366,12 +367,7 @@ retourConnexion.addEventListener('click',function(e){
 
 
 
-
 //------------------ AFFICHAGE CHANSONS-------------
-
-
-let val=0;
-
 
 document.ready(affichage())
 
@@ -387,88 +383,124 @@ function affichage(){
   
 }
 
+lyrimacs_bouton.addEventListener('click',function () {
+  sect1.style.width=100+'vw';
+  sect3.style.width=0+'vw';
+  retour1.style.opacity=0;
+  cache.style.opacity=0;
+  setTimeout(function(){
+    sect3.style.display='none';
+  },900);
+
+});
+
+const form4=document.querySelector('#form4');
+const search_type=document.querySelector('.search-type');
+
+rechercher.addEventListener("click", function(e){
+  e.preventDefault();
+  if(form4.nom.value != ""){
+    const form= {};
+    form.nom= form4.nom.value;
+    form.search_type=search_type.options[search_type.selectedIndex].value;
+    //console.log('./src/routeur.php/chansons/'+form.search_type+"/"+form.nom);
+    fetch('./src/routeur.php/chansons/'+form.search_type+"/"+form.nom )
+    .then(response=>response.json())
+    .then(response=>{
+      afficheChansons(response);
+    })
+    .catch(error => { console.log(error) });
+  }
+})
+
 
 function afficheChansons(response,numChanson){
 
-  
   var content = "<div id='chansons'>";
 
   response.forEach(function (chanson) {
-    verifFav(chanson.id_Ch);
-    numChanson=chanson.id_Ch;
+
+    verifFav(chanson.id_Ch).then(json => {
+      console.log()
+      numChanson=chanson.id_Ch;
+      content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
+      content += "<div class='commentaire'>";
+      
+      if(json)
+      {
+        //console.log(numChanson)
+        content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
+      }
+      else
+      {
+        //console.log(numChanson)
+        content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
+      }
+      
+      content += "</div></div>";
+      chansons.innerHTML = content;
+    });
+   
+  
+  });
+  
+ 
+}
+
+async function verifFav(idChanson){ 
+    
+    let reponse = await fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur);
+    let json= await reponse.json();
+    
+  return json;   
+}
+
+//--tri par nombre de Favoris---
+function affichageParFav(){
+  fetch('./src/routeur.php/triParFav/')
+  .then(response=>response.json())
+  .then(response=>{
+    afficheChansonsTriParFav(response)
+  })
+  .catch(error => { console.log(error) });
+  
+}
+
+  
+function afficheChansonsTriParFav(response){
+  var content = "<div id='chansons'>";
+
+  response.forEach(function (chanson) {
     content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
     content += "<div class='commentaire'>";
     
-    if(val==1)
-    {
-      content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
-    }
-    if(val==0)
-    {
-      content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
-    }
-    
+    //suppr like au click
+    content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" +chanson.id_Ch + "\")'>";
+
     content += "</div></div>";
   
   });
 
   chansons.innerHTML = content;
+  
+}
  
-}
-
-
-function verifFav(idChanson){ 
-
-  
-  fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur)
-    .then(data=>data.json())
-    .then(data=>{
-     
-     if(data==false){ val=0}
-     else {val=1}
-     
-     console.log(val)
-    })
-    .catch(error => { console.log(error) });
-    
-
-    
-    
-  }
-
-//------------------ Ajout FAVORI-------------
-
-function addFav(numChanson){
-  const form={};
-  form.numCh=numChanson;
-  form.user=id_utilisateur;
-  console.log('add' +form);
-  fetch('./src/routeur.php/fav', { method: 'POST', body: JSON.stringify(form)})
-  .then(response=>response.json())
-  .then(response=>{
-  afficheChansons(response)
+  const fav=document.querySelector('#triFav');
+fav.addEventListener('click',function(e){
+  e.preventDefault();
+  console.log('testafav');
+  affichageParFav();
 })
-  
-}
 
-//------------------ Supprimme FAVORI-------------
+const ajout=document.querySelector('#triAjout');
+ajout.addEventListener('click',function(e){
+  e.preventDefault();
+  console.log('testajout');
+  affichage();
+});
 
-function supprFav(numChanson){
-  const form={};
-  form.numCh=numChanson;
-  form.user=id_utilisateur;
-  console.log('del' +form);
-  fetch('./src/routeur.php/fav', { method: 'DELETE', body: JSON.stringify(form)}) // peut être devoir faire passer par l'uri 
-  .then(response=>response.json())
-  .then(response=>{
-  afficheChansons(response)
-})
-  
-}
 
 //------------------ Ajout CHANSONS-------------
-
-
 
 
 const genre=document.querySelector('.genre');
@@ -500,14 +532,75 @@ ajout_chanson.addEventListener('click',function(e){
 
 })
 
+nvl_chanson_bouton.addEventListener('click', () => {
+  ajoute_chanson.classList.toggle('displayed');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
+
+annul_ajout_bouton.addEventListener('click', () => {
+  ajoute_chanson.classList.toggle('displayed');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
 
 
+//------------------ Affichage FAVORIS-------------
+
+const mesFavs_bouton=document.querySelector('#mesFavs');
+mesFavs_bouton.addEventListener('click', function(e){
+  e.preventDefault();
+  console.log('testMesFavs');
+  fetch('./src/routeur.php/MesFavs/'+ id_utilisateur)
+  .then(response=>response.json())
+  .then(response=>{
+    afficheMesFavs(response);
+  })
+  .catch(error => { console.log(error) });
+
+});
+
+function afficheMesFavs(response){
+  var content = "<div id='chansons'>";
+  response.forEach(function (chanson) {
+    content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
+    content += "<div class='commentaire'>";
+    //suppr like au click
+    content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" +chanson.id_Ch + "\")'>";
+    content += "</div></div>";
+  });
+  chansons.innerHTML = content;
+}
+
+
+//------------------ Ajout FAVORI-------------
+
+function addFav(numChanson){
+  console.log(numChanson)
+  const form={};
+  form.numCh=numChanson;
+  form.user=id_utilisateur;
+  fetch('./src/routeur.php/fav', { method: 'POST', body: JSON.stringify(form)})
+  .then(response=>response.json())
+  .then(response=>{
+  afficheChansons(response)
+})
+  
+}
+
+//------------------ Supprime FAVORI-------------
+
+function supprFav(numChanson){
+  const form={};
+  form.numCh=numChanson;
+  form.user=id_utilisateur;
+  fetch('./src/routeur.php/fav', { method: 'DELETE', body: JSON.stringify(form)}) // peut être devoir faire passer par l'uri 
+  .then(response=>response.json())
+  .then(response=>{
+  afficheChansons(response)
+})
+  
+}
 
 //-------------------------------Interface ------------------
-
-
-
-
 
 function afficheInfo(data){
   let content = " <img id='photo_uti' src='./assets/"+ data.photo_num +".png' > " ;
@@ -522,7 +615,7 @@ interface_bouton.addEventListener('click', () => {
   accueil.classList.toggle('displayed');
   document.querySelector('html body').style.overflowY = 'scroll';
 
-  console.log(id_utilisateur)
+  console.log('testInterface')
   fetch('./src/routeur.php/user/'+ id_utilisateur)
   .then(response=>response.json())
   .then(response=>{
@@ -530,7 +623,6 @@ interface_bouton.addEventListener('click', () => {
   })
   .catch(error => { console.log(error) });
 
-  
 });
 
 deco_bouton.addEventListener('click', function() {
@@ -540,26 +632,66 @@ deco_bouton.addEventListener('click', function() {
   cache.style.opacity=0;
 });
 
-lyrimacs_bouton.addEventListener('click',function () {
-  sect1.style.width=100+'vw';
-  sect3.style.width=0+'vw';
 
-  retour1.style.opacity=0;
-  cache.style.opacity=0;
-  setTimeout(function(){
-    sect3.style.display='none';
-  },900);
-});
+//------------------------Change pdp-------------------//
 
-nvl_chanson_bouton.addEventListener('click', () => {
-  ajoute_chanson.classList.toggle('displayed');
+let photo11=document.querySelector('#photo11');
+let photo12=document.querySelector('#photo12');
+let photo13=document.querySelector('#photo13');
+let photo14=document.querySelector('#photo14');
+let photo15=document.querySelector('#photo15');
+let photo16=document.querySelector('#photo16');
+
+photo11.addEventListener('click',function(){
+  photo=1;
+})
+photo12.addEventListener('click',function(){
+  photo=2;
+})
+photo13.addEventListener('click',function(){
+  photo=3;
+})
+photo14.addEventListener('click',function(){
+  photo=4;
+})
+photo15.addEventListener('click',function(){
+  photo=5;
+})
+photo16.addEventListener('click',function(){
+  photo=6;
+})
+
+const changepdp_bouton=document.querySelector('#changepdp_bouton');
+const changePdp=document.querySelector('#changePdp');
+const valid_change_pdp=document.querySelector('#valid_change_pdp');
+
+changepdp_bouton.addEventListener('click', () => {
+  changePdp.classList.toggle('displayed');
+  accueil.style.filter='blur(4px)';
+  console.log('testpdp');
   document.querySelector('html body').style.overflowY = 'scroll';
 });
 
-annul_ajout_bouton.addEventListener('click', () => {
-  ajoute_chanson.classList.toggle('displayed');
-  document.querySelector('html body').style.overflowY = 'scroll';
+valid_change_pdp.addEventListener('click', () => {
+  console.log('testChangepdp')
+  changePdp.classList.toggle('displayed');
+  accueil.style.filter='blur(0px)';
+
+  fetch('./src/routeur.php/photo/'+ id_utilisateur +','+ photo)
+  .then(response=>response.json())
+  .then(response=>{
+    afficheNvellePdp(response);
+  })
+  .catch(error => { console.log(error) });
+
 });
+
+function afficheNvellePdp(data){
+  console.log('c change');
+  let content = " <img id='photo_uti' src='./assets/"+ data +".png' > " ;
+  pdp.innerHTML = content;
+}
+
 
 
 

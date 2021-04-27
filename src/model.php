@@ -32,7 +32,7 @@ function getGenre($dbb){
     return $rows;
 }
 
-//Recupere la liste de toutes les chansons 
+//Recupere la liste de toutes les chansons triées par date d'ajout
 function getChanson(){
     $link = connexion();
     $rs = $link->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G ORDER BY id_Ch DESC");
@@ -46,17 +46,25 @@ function getChanson(){
     }
     return $rows;
 }
-/*
-$result=getChanson();
-foreach($result as $key=>$value){
-    foreach($value as $key2=>$value2){
-    echo($key2);
-    echo('<br>');
-    echo($value2);
-    echo('<br>');
+
+//Récupère les chansons triées par nb de fav
+function getChansonTriParFav(){
+    $link = connexion();
+    $rs = $link->query("SELECT titre, artiste FROM chansons AS c
+                            JOIN favoris AS f ON (c.id_Ch =f.ch_id) 
+                            JOIN artistes as a ON(a.id_Art=c.art_id)
+                        GROUP BY titre, ch_id ORDER BY (COUNT(*)) DESC");
+    if (!$rs) {
+        echo "Un problème est arrivé.\n";
+        exit;
     }
+    $rows = array();
+    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
+        $rows[] = $r;
+    }
+    return $rows;
 }
-*/
+
 
 //Recupere la liste de tous les commentaire par chanson
 function getCom($dbb){
@@ -86,23 +94,6 @@ function getInfoUti($id){
     return $userinfo;
 }
 
-/*
-$result = getPseudoUti('7');
-foreach($result[0] as $value){
-    echo $value;
-}*/
-
-//Recupere le num de la photo de l'utilisateur dont on donne l'id
-/*function getPhotoUti($dbb,$id){
-	$rs = $dbb->prepare("SELECT photo_num FROM utilisateurs WHERE id_Uti = ?");
-	if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rs->execute(array($id));
-    $userinfo = $rs->fetch();
-    return $userinfo[0];
-}*/
 
 //Ajoute un artiste a la bdd grace a son nom
 function addArtiste($artiste){
@@ -134,25 +125,6 @@ function addMusic($titre, $artiste, $genre){
 }
 
 
-//Trie par nombre de like
-function likeSorting($dbb){
-    $rs=$dbb->prepare("SELECT titre, artiste , COUNT(*) 
-    FROM chansons AS c
-    JOIN favoris AS f ON (c.id_Ch =f.ch_id) 
-    JOIN artistes as a ON(a.id_Art=c.art_id)
-    GROUP BY titre, ch_id
-    ORDER BY (COUNT(*)) DESC"); 
-    if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rows = array();
-    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
-        $rows[] = $r;
-    }
-    return $rows;
-}
-
 //Verifie que l'utilisateur qui tente de se connecter existe PAS FINI
 
 function connexionUser($pseudo,$mdp){
@@ -178,31 +150,36 @@ function connexionUser($pseudo,$mdp){
 
 
 //Recupere la liste des chansons d'un artiste donné
-function getChansonParArtiste($bdd, $artiste){
-    $rs = $dbb->query("SELECT * FROM chansons AS c 
+function getChansonParArtiste($artiste){
+    $link = connexion();
+    $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
     JOIN artistes AS a ON (c.art_id=a.id_Art) 
-        WHERE a.artiste LIKE %?%");
+        WHERE a.artiste LIKE ?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
-    $rows = array($artiste);
+
+    $rs->execute(array($artiste));  
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }
     return $rows;
 }
 
+
 //Recupere la liste des chansons ayant le titre donné
-function getChansonParTitre($bdd, $titre){
-    $rs = $dbb->query("SELECT a.artiste, c.titre FROM chansons AS c 
+function getChansonParTitre($titre){
+    $link = connexion();
+    $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
     JOIN artistes AS a ON (c.art_id=a.id_Art)
-        WHERE c.titre LIKE %?%");
+        WHERE c.titre LIKE ?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
-    $rows = array($titre);
+
+    $rs->execute(array($titre));
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }
@@ -251,6 +228,7 @@ function addFav($numCh, $user){
     }
     $rqt->execute(array($user,$numCh));
 
+    return getChanson();
 }
 
 function supprFav($numCh, $user){
@@ -261,6 +239,8 @@ function supprFav($numCh, $user){
         exit;
     }
     $rqt->execute(array($user,$numCh));
+
+    return getChanson();
 }
 
 function favVerif($idCh,$user){
@@ -276,10 +256,10 @@ function favVerif($idCh,$user){
 }
 
 
-
 //Recupere les like d'un utilisateur
-function getLikeUtilisateur($dbb, $idUti){
-    $rs = $dbb->prepare("SELECT titre,artiste FROM chansons AS c 
+function getLikeUtilisateur($idUti){
+    $link = connexion();
+    $rs = $link->prepare("SELECT titre,artiste FROM chansons AS c 
 	JOIN favoris AS f 
 		ON c.id_Ch=f.ch_id
 	JOIN utilisateurs AS u
@@ -292,12 +272,21 @@ function getLikeUtilisateur($dbb, $idUti){
         echo "Un problème est arrivé.\n";
         exit;
     }
-    $rows = array($idUti);
+
+    $rs->execute(array($idUti));
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }
     return $rows;
 }
+
+//---------------------------------------------
+/*
+$fav = getLikeUtilisateur(2);
+echo ('Hey tes chansons de pute sont :');
+var_dump($fav);*/
+
+//---------------------------------------------
 
 function addUser($pseudo, $email, $mdp, $photo) {
     $link = connexion();
@@ -321,6 +310,18 @@ function addUserVerif($email){
     return $result;
 }
 
+
+function changePhoto($idPhoto, $idUti){
+    $link = connexion();
+    $rs=$link->prepare('UPDATE utilisateurs SET photo_num = ? WHERE utilisateurs.id_Uti = ? ');
+    $rs->execute(array($idPhoto, $idUti));
+    return $idPhoto; 
+}
+
+/*
+$fav2 = changePhoto(2,7);
+echo ('Ta nvelle pdp :');
+var_dump($fav2);*/
 
 
 ?>

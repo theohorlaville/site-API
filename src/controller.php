@@ -19,12 +19,16 @@
         echo json_encode(favVerif($idCh,$user));
     }
 
-    
-
     function delFav($form){
         $fav= json_decode($form, true);
         supprFav($fav['numCh'],$fav['user']);
         echo json_encode(getChanson());
+    }
+
+    
+
+    function affMesFavs($idUti){
+        print json_encode(getLikeUtilisateur($idUti));
     }
 
     function newChanson($form){
@@ -34,18 +38,20 @@
         echo json_encode(getChanson());
     }
 
-    /*
-    $test = [
-        "artiste" => "PNL",
-        "titre" => "au DD",
-        "genre"=>"4",
-    ];
-    $test=json_encode($test);
-    newChanson($test);
-    */
+    function affChansonsParArtiste($nom){
+        echo json_encode(getChansonParArtiste($nom));
+    }
+
+    function affChansonsParTitre($titre){
+        echo json_encode(getChansonParTitre($titre));
+    }
 
     function affChansons(){
         echo json_encode(getChanson());
+    }
+
+    function affChansonsTriParFav(){
+        echo json_encode(getChansonTriParFav());
     }
 
     function affCom(){
@@ -55,15 +61,14 @@
     function affUti($id){
         print json_encode(getUti($link,$id));
     }
+
+    function changePdp($idPdp,$idUti){
+        print json_encode(changePhoto($idPdp,$idUti));
+    }
     
     function affInfoUti($id){
         echo json_encode(getInfoUti($id));
     }
-
-    /*
-    function affPhotoUti($id){
-        print json_encode(getPhotoUti($link,$id));
-    }*/
 
     function compareInscription($email){
 

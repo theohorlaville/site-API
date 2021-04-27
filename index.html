@@ -61,7 +61,10 @@
                               Déconnexion
                         </span>     
                         <div id="pdp"></div>
-                        <h4 id="pseudo"></h4>       
+                        <h4 id="pseudo"></h4>  
+                        <span id="changepdp_bouton">
+                              Je veux changer ma p'tite bouille
+                        </span>      
                   </div>
                   <div id='accueil'>
                         <h2 id="titre-accueil">Partageons de bonnes ondes</h2>
@@ -76,10 +79,11 @@
                                           <option value="titre">titre</option>
                                           <option value="artiste">artiste</option>
                                     </select>
-                                    <input type="text" class="search-bar" placeholder="Papaoutai, Billie Jean..." required="required">
+                                    <input type="text" name="nom" class="search-bar" placeholder="Papaoutai, Billie Jean..." required="required">
                                     <button id='rechercher' type="submit">Rechercher</button>
                               </form>
                         </div>
+                        
                         <div id='chansons'>
                               <div id='ajoute_chanson'>
                                     <form id='form5' action="#">
@@ -111,11 +115,32 @@
                                           </div>
                                     </form>
                               </div>
+                              <div id='tri'>
+                                    <button id='triFav' value="triParFav">les plus populaires</button>
+                                    <button id='triAjout' value="triParAjout">derniers ajouts</button>
+                                    <button id='mesFavs' value="mesFavs">mes favoris</button>
+                              </div>
                               <span id="nvl_chanson_bouton"> Nouvelle chanson </span>
-                              <div id='affiche_chansons'>    </div>
+                              <div id='affiche_chansons'>    
+
+                              </div>
                         </div>
-                        
   
+                  </div>
+
+                  <div id="changePdp">
+                        <form id='form6'>
+                              <label for="changePdp"> C'est con, t'étais bien comme ça...</label>
+                              <div id="photos">
+                                    <img id="photo11" class="photo" src="./assets/1.png">
+                                    <img id="photo12" class="photo" src="./assets/2.png">
+                                    <img id="photo13" class="photo" src="./assets/3.png">
+                                    <img id="photo14" class="photo" src="./assets/4.png">
+                                    <img id="photo15" class="photo" src="./assets/5.png">
+                                    <img id="photo16" class="photo" src="./assets/6.png">
+                              </div>
+                              <span id='valid_change_pdp'>Ca part !</span>
+                        </form>
                   </div>
             
       </div>

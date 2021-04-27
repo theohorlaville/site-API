@@ -37,23 +37,48 @@
 						
 				} break;
 			
-			case 'chansons' : 
-				switch($method) {			
-					case 'GET':
-						affChansons();
-						break;
-					
-					case 'POST':
-						$json = file_get_contents('php://input');
-						newChanson($json);
-						break;
+			case 'chansons' :
+				switch($page[4]){
+					case 'titre':
+						switch($method){
+							case 'GET':
+								affChansonsParTitre($page[5]);
+								break;
 							
+							default:
+								http_response_code('404');
+								echo 'OOPS';	
+						}break;
+											
+					case 'artiste':
+						switch($method){
+							case 'GET':
+								affChansonsParArtiste($page[5]);
+								break;
+							
+							default:
+								http_response_code('404');
+								echo 'OOPS';	
+						}break;
+					
 					default:
-						http_response_code('404');
-						echo 'OOPS';
-						
-						
-				} break;
+						switch($method) {			
+							case 'GET':
+								affChansons();
+								break;
+							
+							case 'POST':
+								$json = file_get_contents('php://input');
+								newChanson($json);
+								break;
+									
+							default:
+								http_response_code('404');
+								echo 'OOPS';
+								
+								
+						} break;
+			} break;
 
 			case 'user' : 
 				switch($method) {			
@@ -65,6 +90,19 @@
 						http_response_code('404');
 						echo 'OOPS';
 						
+				} break;
+
+			case 'photo':
+				switch($method) {			
+					case 'GET':
+						$subpage = explode(',',$page[4]);
+						changePdp($subpage[1],$subpage[0]);
+						break;
+							
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+							
 				} break;
 
 			case 'fav' : 
@@ -90,7 +128,30 @@
 						echo 'OOPS';
 						
 				} break;
+					
+		case 'triParFav':
+			switch($method) {			
+				case 'GET':
+					affChansonsTriParFav();
+					break;
+						
+				default:
+					http_response_code('404');
+					echo 'OOPS';
+						
+			} break;
 
+		case 'MesFavs':
+			switch($method) {			
+				case 'GET':
+					affMesFavs($page[4]);
+					break;
+						
+				default:
+					http_response_code('404');
+					echo 'OOPS';
+						
+			} break;
 
         default : 
 			http_response_code('500');
