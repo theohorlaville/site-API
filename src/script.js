@@ -423,38 +423,56 @@ function affichage(){
 function afficheChansons(response){
 
   var content = "<div id='chansons'>";
+  
   console.log('afficheChanson')
-  response.forEach(function (chanson) {
+  let i=0;
 
-    verifFav(chanson.id_Ch).then(json => {
-      console.log(json)
+  response.forEach(function (chanson) {
+    
+    i++;
+  
+     
       content += "<div class='chanson' >"
 
       
       content +="<div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
-
-      
-      if(json)
-      {
-        //console.log(numChanson)
-        content += "<div id='like-cont'><img src='./assets/like-act' id='like' onclick='supprFav(\"" + chanson.id_Ch+  "\")'></div>";
-      }
-      else
-      {
-        //console.log(numChanson)
-        content += "<div id='like-cont'><img src='./assets/like-base' id='like' onclick='addFav(\"" + chanson.id_Ch+  "\")'></div>";
-      }
      
-      content += "<div class='commentaire'><button class='button_commentaire' >commentaires</button></div></div>";
-      
+      content += "<div id='like-cont" +i+"'>"
+      content += "</div><div class='commentaire'><button class='button_commentaire' >commentaires</button></div></div>";
+    
       chansons.innerHTML = content;
     });
+    
+  i=0
+
+  response.forEach(function(song){
+    
+    
+    i++;
+    let likezone=document.querySelector("#like-cont"+i+"")
+
+    verifFav(song.id_Ch).then(json=>{
+
+      console.log(json)
+
+     
+      if(json==false)
+      {
+        likezone.innerHTML= "<img src='./assets/like-base' id='like' onclick='addFav(\"" + song.id_Ch+  "\")'>";
+      }
+
+      else
+      {
+        likezone.innerHTML = "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + song.id_Ch+  "\")'>";
+      }
+
+    })
+    
    
-  
-  });
-  
- 
-}
+  })  
+
+  }
+    
 
 //-----Verification Fav-----
 
@@ -462,7 +480,7 @@ async function verifFav(idChanson){
     
     let reponse = await fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur);
     let json= await reponse.json();
-    console.log(json)
+    
     
   return json;   
 }
