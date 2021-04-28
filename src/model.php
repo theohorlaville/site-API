@@ -50,7 +50,7 @@ function getChanson(){
 //Récupère les chansons triées par nb de fav
 function getChansonTriParFav(){
     $link = connexion();
-    $rs = $link->query("SELECT titre, artiste FROM chansons AS c
+    $rs = $link->query("SELECT * FROM chansons AS c
                             JOIN favoris AS f ON (c.id_Ch =f.ch_id) 
                             JOIN artistes as a ON(a.id_Art=c.art_id)
                         GROUP BY titre, ch_id ORDER BY (COUNT(*)) DESC");
@@ -64,17 +64,7 @@ function getChansonTriParFav(){
     }
     return $rows;
 }
-/*
-$result=getChanson();
-foreach($result as $key=>$value){
-    foreach($value as $key2=>$value2){
-    echo($key2);
-    echo('<br>');
-    echo($value2);
-    echo('<br>');
-    }
-}
-*/
+
 
 //Recupere la liste de tous les commentaire par chanson
 function getCom($dbb){
@@ -103,12 +93,6 @@ function getInfoUti($id){
     $userinfo = $rs->fetch(PDO::FETCH_ASSOC);
     return $userinfo;
 }
-
-/*
-$result = getPseudoUti('7');
-foreach($result[0] as $value){
-    echo $value;
-}*/
 
 
 //Ajoute un artiste a la bdd grace a son nom
@@ -272,10 +256,10 @@ function favVerif($idCh,$user){
 }
 
 
-
 //Recupere les like d'un utilisateur
-function getLikeUtilisateur($dbb, $idUti){
-    $rs = $dbb->prepare("SELECT titre,artiste FROM chansons AS c 
+function getLikeUtilisateur($idUti){
+    $link = connexion();
+    $rs = $link->prepare("SELECT * FROM chansons AS c 
 	JOIN favoris AS f 
 		ON c.id_Ch=f.ch_id
 	JOIN utilisateurs AS u
@@ -288,12 +272,21 @@ function getLikeUtilisateur($dbb, $idUti){
         echo "Un problème est arrivé.\n";
         exit;
     }
-    $rows = array($idUti);
+
+    $rs->execute(array($idUti));
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }
     return $rows;
 }
+
+//---------------------------------------------
+/*
+$fav = getLikeUtilisateur(2);
+echo ('Hey tes chansons de pute sont :');
+var_dump($fav);*/
+
+//---------------------------------------------
 
 function addUser($pseudo, $email, $mdp, $photo) {
     $link = connexion();
@@ -316,5 +309,19 @@ function addUserVerif($email){
     $result=$rs->fetch();
     return $result;
 }
+
+
+function changePhoto($idPhoto, $idUti){
+    $link = connexion();
+    $rs=$link->prepare('UPDATE utilisateurs SET photo_num = ? WHERE utilisateurs.id_Uti = ? ');
+    $rs->execute(array($idPhoto, $idUti));
+    return $idPhoto; 
+}
+
+/*
+$fav2 = changePhoto(2,7);
+echo ('Ta nvelle pdp :');
+var_dump($fav2);*/
+
 
 ?>

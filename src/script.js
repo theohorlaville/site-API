@@ -151,6 +151,7 @@ let photo=0;
 
 photo1.addEventListener('click',function(){
   photo=1;
+  console.log('tu las bg');
   photo1.style.width='20%';
   photo2.style.width='15%';
   photo3.style.width='15%';
@@ -206,6 +207,18 @@ photo6.addEventListener('click',function(){
 })
 
 
+//-----Retour page d'accueil----
+
+lyrimacs_bouton.addEventListener('click',function () {
+  sect1.style.width=100+'vw';
+  sect3.style.width=0+'vw';
+  retour1.style.opacity=0;
+  cache.style.opacity=0;
+  setTimeout(function(){
+    sect3.style.display='none';
+  },900);
+
+});
 
 
 
@@ -366,26 +379,10 @@ retourConnexion.addEventListener('click',function(e){
 
 
 
-
-//------------------ AFFICHAGE CHANSONS-------------
-
+//------------------ RECHERCHE CHANSONS-------------
 
 
 
-
-document.ready(affichage())
-
-function affichage(){
-  
-  let numChanson;
-  fetch('./src/routeur.php/chansons/')
-  .then(response=>response.json())
-  .then(response=>{
-    afficheChansons(response,numChanson)
-  })
-  .catch(error => { console.log(error) });
-  
-}
 
 const form4=document.querySelector('#form4');
 const search_type=document.querySelector('.search-type');
@@ -407,32 +404,49 @@ rechercher.addEventListener("click", function(e){
 })
 
 
-function afficheChansons(response,numChanson){
+//------------------ AFFICHAGE CHANSONS-------------
 
+document.ready(affichage())
+
+function affichage(){
   
+  fetch('./src/routeur.php/chansons/modif')
+  .then(response=>response.json())
+  .then(response=>{
+    afficheChansons(response)
+  })
+  .catch(error => { console.log(error) });
+  
+}
+
+
+function afficheChansons(response){
+
   var content = "<div id='chansons'>";
-
+  console.log('afficheChanson')
   response.forEach(function (chanson) {
-  
-    
+
     verifFav(chanson.id_Ch).then(json => {
-      console.log()
-      numChanson=chanson.id_Ch;
-      content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
-      content += "<div class='commentaire'>";
+      console.log(json)
+      content += "<div class='chanson' >"
+
+      
+      content +="<div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
+
       
       if(json)
       {
         //console.log(numChanson)
-        content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
+        content += "<div id='like-cont'><img src='./assets/like-act' id='like' onclick='supprFav(\"" + chanson.id_Ch+  "\")'></div>";
       }
       else
       {
         //console.log(numChanson)
-        content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
+        content += "<div id='like-cont'><img src='./assets/like-base' id='like' onclick='addFav(\"" + chanson.id_Ch+  "\")'></div>";
       }
+     
+      content += "<div class='commentaire'><button class='button_commentaire' >commentaires</button></div></div>";
       
-      content += "</div></div>";
       chansons.innerHTML = content;
     });
    
@@ -442,45 +456,111 @@ function afficheChansons(response,numChanson){
  
 }
 
+//-----Verification Fav-----
+
 async function verifFav(idChanson){ 
     
     let reponse = await fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur);
     let json= await reponse.json();
+    console.log(json)
     
   return json;   
 }
 
-  //--tri par nombre de Favoris---
-  function affichageParFav(){
-    fetch('./src/routeur.php/triParFav/')
+//------------------ TRI CHANSONS-------------
+
+//--tri par NOMBRE de Favoris---
+
+const fav=document.querySelector('#triFav');
+fav.addEventListener('click',function(e){
+  e.preventDefault();
+  affichageParFav();
+})
+
+function affichageParFav(){
+  fetch('./src/routeur.php/triParFav/')
+  .then(response=>response.json())
+  .then(response=>{
+    afficheChansons(response)
+  })
+  .catch(error => { console.log(error) });
+  
+}
+ 
+
+//---Tri par date d'ajout---//
+
+const ajout=document.querySelector('#triAjout');
+ajout.addEventListener('click',function(e){
+  e.preventDefault();
+  affichage();
+});
+
+//----- Tri par MES FAVORIS-----
+
+const mesFavs_bouton=document.querySelector('#mesFavs');
+mesFavs_bouton.addEventListener('click', function(e){
+  e.preventDefault();
+
+  fetch('./src/routeur.php/MesFavs/'+ id_utilisateur)
+  .then(response=>response.json())
+  .then(response=>{
+    console.log(response)
+    afficheChansons(response);
+   
+  })
+  .catch(error => { console.log(error) });
+
+});
+
+
+
+//------------------ Ajout CHANSONS-----------------
+
+
+const genre=document.querySelector('.genre');
+const ajout_chanson=document.querySelector('#valide_ajout_bouton');
+const form5=document.querySelector("#form5");
+
+ajout_chanson.addEventListener('click',function(e){
+  e.preventDefault();
+
+  if(form5.artiste.value!="" && form5.titre.value!="") {
+    const form = {};
+    form.titre = document.querySelector('.barre-titre').value;
+    form.artiste = document.querySelector('.barre-artiste').value;
+    form.genre= genre.options[genre.selectedIndex].value;
+
+    console.log(JSON.stringify(form))
+    fetch('./src/routeur.php/chansons/modif', { method: 'POST', body: JSON.stringify(form)})
     .then(response=>response.json())
     .then(response=>{
-      afficheChansonsTriParFav(response)
-    })
+    afficheChansons(response)
+  })
     .catch(error => { console.log(error) });
-    
   }
-  
-  function afficheChansonsTriParFav(response){
-  
-    
-    var content = "<div id='chansons'>";
-  
-    response.forEach(function (chanson) {
-      content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
-      content += "<div class='commentaire'>";
-      
-      //suppr like au click
-      content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" +chanson.id_Ch + "\")'>";
-  
-      content += "</div></div>";
-    
-    });
-  
-    chansons.innerHTML = content;
-   
-  }
- 
+  else { alert('Veuillez remplir tous les champs')}
+
+
+})
+
+//--Formulaire ajout de chanson
+
+
+nvl_chanson_bouton.addEventListener('click', () => {
+  ajoute_chanson.classList.toggle('displayed');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
+
+annul_ajout_bouton.addEventListener('click', () => {
+  ajoute_chanson.classList.toggle('displayed');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
+
+
+
+
+
 //------------------ Ajout FAVORI-------------
 
 function addFav(numChanson){
@@ -496,7 +576,7 @@ function addFav(numChanson){
   
 }
 
-//------------------ Supprimme FAVORI-------------
+//------------------ Supprime FAVORI-------------
 
 function supprFav(numChanson){
   const form={};
@@ -510,48 +590,7 @@ function supprFav(numChanson){
   
 }
 
-//------------------ Ajout CHANSONS-------------
-
-
-
-
-const genre=document.querySelector('.genre');
-const ajout_chanson=document.querySelector('#valide_ajout_bouton');
-const form5=document.querySelector("#form5");
-ajout_chanson.addEventListener('click',function(e){
-  e.preventDefault();
-
-  console.log(form5.titre.value);
-  console.log(form5.artiste.value);
-  console.log(genre.options[genre.selectedIndex].value);
-
-  if(form5.artiste.value!="" && form5.titre.value!="") {
-    const form = {};
-    form.titre = document.querySelector('.barre-titre').value;
-    form.artiste = document.querySelector('.barre-artiste').value;
-    form.genre= genre.options[genre.selectedIndex].value;
-
-    console.log(JSON.stringify(form))
-    fetch('./src/routeur.php/chansons', { method: 'POST', body: JSON.stringify(form)})
-    .then(response=>response.json())
-    .then(response=>{
-    afficheChansons(response)
-  })
-    .catch(error => { console.log(error) });
-  }
-  else { alert('Veuillez remplir tous les champs')}
-
-
-})
-
-
-
-
 //-------------------------------Interface ------------------
-
-
-
-
 
 function afficheInfo(data){
   let content = " <img id='photo_uti' src='./assets/"+ data.photo_num +".png' > " ;
@@ -566,7 +605,7 @@ interface_bouton.addEventListener('click', () => {
   accueil.classList.toggle('displayed');
   document.querySelector('html body').style.overflowY = 'scroll';
 
-  console.log(id_utilisateur)
+  console.log('testInterface')
   fetch('./src/routeur.php/user/'+ id_utilisateur)
   .then(response=>response.json())
   .then(response=>{
@@ -574,7 +613,6 @@ interface_bouton.addEventListener('click', () => {
   })
   .catch(error => { console.log(error) });
 
-  
 });
 
 deco_bouton.addEventListener('click', function() {
@@ -584,41 +622,70 @@ deco_bouton.addEventListener('click', function() {
   cache.style.opacity=0;
 });
 
-lyrimacs_bouton.addEventListener('click',function () {
-  sect1.style.width=100+'vw';
-  sect3.style.width=0+'vw';
 
-  retour1.style.opacity=0;
-  cache.style.opacity=0;
-  setTimeout(function(){
-    sect3.style.display='none';
-  },900);
-});
-
-nvl_chanson_bouton.addEventListener('click', () => {
-  ajoute_chanson.classList.toggle('displayed');
-  document.querySelector('html body').style.overflowY = 'scroll';
-});
-
-annul_ajout_bouton.addEventListener('click', () => {
-  ajoute_chanson.classList.toggle('displayed');
-  document.querySelector('html body').style.overflowY = 'scroll';
-});
+//------------------------Change pdp-------------------//
 
 
-const ajout=document.querySelector('#triAjout');
-const fav=document.querySelector('#triFav');
-fav.addEventListener('click',function(e){
-  e.preventDefault();
-  console.log('testafav');
-  affichageParFav();
+let photo11=document.querySelector('#photo11');
+let photo12=document.querySelector('#photo12');
+let photo13=document.querySelector('#photo13');
+let photo14=document.querySelector('#photo14');
+let photo15=document.querySelector('#photo15');
+let photo16=document.querySelector('#photo16');
+
+photo11.addEventListener('click',function(){
+  photo=1;
 })
-ajout.addEventListener('click',function(e){
-  e.preventDefault();
-  console.log('testajout');
-  affichage();
+photo12.addEventListener('click',function(){
+  photo=2;
+})
+photo13.addEventListener('click',function(){
+  photo=3;
+})
+photo14.addEventListener('click',function(){
+  photo=4;
+})
+photo15.addEventListener('click',function(){
+  photo=5;
+})
+photo16.addEventListener('click',function(){
+  photo=6;
+})
+
+const changepdp_bouton=document.querySelector('#changepdp_bouton');
+const changePdp=document.querySelector('#changePdp');
+const valid_change_pdp=document.querySelector('#valid_change_pdp');
+
+changepdp_bouton.addEventListener('click', () => {
+  changePdp.classList.toggle('displayed');
+  accueil.style.filter='blur(4px)';
+  console.log('testpdp');
+  document.querySelector('html body').style.overflowY = 'scroll';
+});
+
+valid_change_pdp.addEventListener('click', () => {
+ 
+  changePdp.classList.toggle('displayed');
+  accueil.style.filter='blur(0px)';
+
+  fetch('./src/routeur.php/photo/'+ id_utilisateur +','+ photo)
+  .then(response=>response.json())
+  .then(response=>{
+    afficheNvellePdp(response);
+  })
+  .catch(error => { console.log(error) });
 
 });
+
+function afficheNvellePdp(data){
+  console.log('c change');
+  let content = " <img id='photo_uti' src='./assets/"+ data +".png' > " ;
+  pdp.innerHTML = content;
+}
+
+
+
+
 
 
 
