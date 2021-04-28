@@ -1,0 +1,729 @@
+html, body {
+    font-family: 'Bebas Neue', cursive;
+    margin:0;
+    padding:0;
+}
+
+body {
+    display: flex;
+    background-color: #fcf8ec;
+    object-fit: contain;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/*---------------PARTIE FORMULAIRE-------------------*/
+
+/*--structure--*/
+
+#section1 {
+    position: relative;
+    z-index: 10;
+    background-image: url('../assets/fond.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100vw;
+    height:100vh;
+    box-sizing: border-box;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    transition-duration:1s;
+    object-fit: contain;
+    overflow: hidden;
+}
+
+
+#top {
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+}
+
+h1 {
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 10px;
+    font-size: 400%;
+}
+
+
+#mid {
+    width:100vw;
+    flex:1;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+}
+
+/*--animations--*/
+
+#anim2 {
+    flex:1;
+    padding-left:10%;
+    padding-right:10%;
+}
+
+#anim1 {
+    display: block;
+    flex:1;
+    padding-left:10%;
+    padding-right:10%;
+}
+
+.cls-4 {
+    animation: bouge 2s infinite alternate; 
+}
+
+@keyframes bouge {
+    from{
+        transform: translate(-50px,-40px);
+    }
+    to{
+        transform: translate(-100px,-90px);
+    }
+}
+
+#trompette {
+    transform-origin: center;
+    animation: joue 2s infinite alternate;
+}
+
+#sax {
+    transform-origin: center;
+    animation: joue 2s infinite alternate;
+}
+
+#note1 {
+    animation: bouge 3.5s infinite alternate;
+}
+
+#note2 {
+    animation: bouge 3s infinite alternate;
+}
+
+@keyframes joue {
+    from{
+        transform: rotate(-8deg);
+    }
+    to{
+        transform: rotate(8deg);
+    }
+}
+
+/*--formulaire--*/
+
+
+
+#form1 {
+    width:20vw ;
+}
+
+#form1,#form2,#form3{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-content:center;
+}
+
+input {
+    font-family: 'Roboto', sans-serif;
+    padding: 15px;
+    border:0px;
+}
+
+#search {
+    padding:10px;
+    background-color:#9aaad7;
+    color:#fcf8ec;
+    font-family: 'Bebas Neue', cursive;
+    margin:10px 0px;
+    border: 0px;
+    transition-duration: 0.2s;
+}
+
+#search:hover {
+    background-color:#fcf8ec ;
+    color:#9aaad7;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    letter-spacing: 3px;
+}
+
+
+#commu{
+    padding:10px;
+    background-color:#9aaad7;
+    color:#fcf8ec;
+    font-family: 'Bebas Neue', cursive;
+    border: 0px;
+    width:20vw;
+    transition-duration: 0.2s;
+}
+
+#commu:hover {
+    background-color:#fcf8ec ;
+    color:#9aaad7;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    letter-spacing: 3px;
+}
+
+/*--crédit--*/
+
+#bot {
+    text-align: center;
+    width:100vw;
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-family: 'Roboto', sans-serif;
+    font-size: xx-small;
+    color:#fcf8ec;
+}
+
+/*---------------PARTIE LYRICS-------------------*/
+
+#section2 {
+    position: relative;
+    z-index: 1;
+    width:0vh;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    height: auto;
+    background-image: linear-gradient(45deg, #da9ff9, #bedcfa);
+    transition-duration:1s;
+    object-fit: contain;
+    overflow: hidden;
+}
+
+#titre-oeuvre {
+    text-align: center;
+    font-size: 400%;
+    margin:0;
+}
+
+#auteur {
+    text-align: center;
+}
+
+.parole {
+    width: auto;
+    color:#1e1e1e ;
+    text-align: center;
+    white-space: pre;
+}
+
+#bas {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width: 20%;
+    object-fit: contain;
+    overflow: hidden;
+}
+
+#retour1, #retour2, #envoyer, #crea-compte, #retour-connexion,
+ #valide_ajout_bouton, #annul_ajout_bouton, #rechercher  {
+    background-color:#fcf8ec ;
+    font-family: 'Bebas Neue', cursive;
+    border: 0px;
+    transition-duration: 0.2s;
+    padding: 5px 20px;
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
+}
+
+#retour1, #retour2, #envoyer, #crea-compte{
+    margin:3% 0%;
+}
+
+#crea-compte, #retour-connexion, #rechercher{
+    margin: 1% 0%;
+}
+
+#retour1:hover, #retour2:hover, #envoyer:hover, #crea-compte:hover, #retour-connexion:hover,
+#valide_ajout_bouton:hover , #annul_ajout_bouton:hover, #rechercher:hover {
+    background-color: rgba(0, 0, 0, 0) ;
+    color:#fcf8ec;
+    transition-duration: 0.2s;
+    letter-spacing: 3px;
+}
+
+/*---------------PARTIE CONNEXION COMMU-------------------*/
+
+#section3{
+    position: relative;
+    z-index: 1;
+    width:0vh;
+    height: auto;
+    background-image: linear-gradient(45deg, #da9ff9, #bedcfa);
+    transition-duration:1s;
+    object-fit: contain;
+    overflow: hidden;
+}
+
+#user{
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+#message{
+    text-align: center;
+    transition-duration: 0.5s;
+    position: relative;
+    z-index: 5;
+    background-color: white;
+    border-radius: 4px;
+    width: 20vw;
+    height: 5vw;
+    opacity: 0;
+    justify-self:start;
+}
+
+#cache{
+    position: fixed;
+    transition-duration: 0.5s;
+    background-color: black;
+    opacity: 0%;
+    z-index: 2;
+    height: 100vh;
+    width: 100vw;
+}
+
+#connexion{
+    object-fit: contain;
+    overflow: hidden;
+    transition-duration: 0.2s;
+    transition-delay: 0.2s;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    width: 20vw;
+    height: 40vh;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+#form2 {
+    
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width:80%;
+}
+
+#inscription-button{
+    height: 200%;
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+}
+
+#inscription{
+    position: relative;
+    z-index: 5;
+    transition-delay: 0.2s;
+    transition-duration: 0.2s;
+    text-align: center;
+    width: 50vw;
+    height: 0vh;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+#form3 {
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width:80%;
+}
+
+#form3 .email, #form3 .pseudo, #form3 .password{
+padding: 0;
+}
+
+#photos{
+    object-fit: contain;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#photo1, #photo2, #photo3, #photo4, #photo5, #photo6{
+    width: 15%;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.photo{
+    transition-duration: 0.2s;
+}
+.photo:hover{
+    transition-duration: 0.2s;
+    filter: none;
+}
+
+#retour1{
+    position:relative;
+}
+
+/*---------------PARTIE COMMU------------------*/
+
+#communaute{
+    display: flex;
+    align-content: flex-start;
+    background-color: rgb(145, 136, 121);
+    position: relative;
+    align-content: center;
+    z-index: 4;
+    width: 100vw;
+    height: auto;
+    filter: blur(4px);
+}
+
+/*---------------COMMU 1 : Interface + titre ------------------*/
+
+#titre-accueil{
+    color: white;
+    font-size: 400%;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+#interface{
+    background-color: rgb(208, 140, 235);
+    height: inherit;
+    width: 0 ;
+    transition: 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+#interface.displayed {
+    width: 20% ;
+    height: inherit;
+}
+
+#interface.displayed #deco_bouton, #interface.displayed #pdp, #interface.displayed #pseudo {
+    transform:translateX(0) ;
+    transition: 0.35s ease-out;
+}
+
+#interface #pdp {
+    padding: 10px;
+    transform:translateX(-200px) ;
+}
+
+#interface #pdp #photo_uti{
+    width: 100%;
+    height: 100%;
+}
+
+#boutons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+#interface_bouton {
+    cursor: pointer;
+    background-size: 7.5px;
+    color: #e7e7e7;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    top: calc(14vh + 2%);
+    background: url(../assets/left_arrow_petit.png) no-repeat center left 5px;
+    left: 2.5%;
+    padding: 15px 15px 15px 20px;
+}
+
+#lyrimacs_bouton{ 
+    cursor: pointer;
+    background-size: 7.5px;
+    color: #e7e7e7;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    top: calc(14vh + 2%);
+    right: 2.5%;
+    padding: 15px 20px 15px 15px;
+    background: url(../assets/right_arrow_petit.png) no-repeat center right 5px;
+}
+
+
+#interface #deco_bouton{
+    cursor: pointer;
+    background-size: 7.5px;
+    color: #e7e7e7;
+    font-size: 1em;
+    transform:translateX(-200px) ;
+    margin-top: 5%;
+}
+
+
+#interface #pseudo {
+    color: #e7e7e7;
+    font-size: 3em;
+    display: flex;
+    padding: 10px;
+    transform:translateX(-200px) ;
+    margin-block-start: 0;
+}
+
+h4{
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+#accueil{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    height: inherit;
+    width: 100%;
+    transition: 0.5s ease-out;
+}
+
+#accueil.displayed {
+    width: 100%;
+}
+
+/*---------------COMMU 2 :  barre de recherche ------------------*/
+
+#barre_recherche {
+    background: #ffbdeb;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    top: 0;
+    box-sizing: border-box;
+    padding: 1%;
+    z-index: 1;
+}
+
+#form4 {
+    display: flex;
+    height: 60%;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+#form4 label {
+    display: flex;
+    align-items: center;
+    padding:  0 0 0 1.5%;
+}
+
+#form4 select, #form5 select {
+    cursor: pointer;
+    color: #fcf8ec;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1em;
+    border: none;
+    padding: 0 30px 0 5px;
+    /* Personnalisation de la flèche: */
+    appearance: none;
+    background: url(../assets/down_arrow.png) no-repeat center right 10px;
+    background-size: 15px;
+}
+
+#form4 option {
+    background: #202020;
+}
+
+#form4 .search-bar {
+    color: #e7e7e7;
+    font-family: 'Roboto';
+    font-size: 1em;
+    border-top: 2px solid #323232;
+    border-bottom: 2px solid #323232;
+    flex-grow: 1;
+    padding: 1%;
+    margin: 0 20px 0 0;
+}
+/*
+#form4 .search-bar: placeholder-shown {
+    color: #e7e7e7ab;
+    font-size: 1em;
+}*/
+#form5 option{
+    background-color: black;
+}
+
+/*---------------COMMU 3 :  affiche /ajoute chanson ------------------*/
+
+#nvl_chanson_bouton {
+    cursor: pointer;
+    background: url(../assets/plus.png) no-repeat center left 5px;
+    background-size: 10px;
+    color: #e7e7e7;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    right: 2.5%;
+    padding: 15px 15px 15px 20px;
+}
+
+#ajoute_chanson{
+    background-color: rgb(208, 140, 235);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    height: 0;
+    position: relative;
+    box-sizing: border-box;
+    transition: 0.5s ease-out;
+    overflow: hidden;
+}
+
+#ajoute_chanson.displayed {
+    height: 200px;
+}
+
+
+#form5 {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    height: inherit;
+}
+
+#form5 label {
+    display: flex;
+    align-items: center;
+    padding: 0 1.5% 0 1.5%;
+}
+
+#champ1, #champ2, #champ4 {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#champ3{
+    display: flex;
+    margin-left: 30px;
+}
+
+#form5 .barre-titre , #form5 .barre-artiste{
+    width: 80%;
+    padding: 0;
+}
+
+#form5 .search-type{
+    padding: 0 0 0 25%;
+}
+
+h3{
+    text-align: center;
+    margin: 0;
+}
+
+#valide_ajout_bouton, #annul_ajout_bouton {
+    margin: 20px;
+}
+
+/*---------------COMMU 4 :  affichage musique ------------------*/
+
+#chansons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chanson{
+    margin: 2px;
+    width: 80vw;
+    background-color: #ffbdeb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.commentaire{
+    width: 50%;
+}
+.info-chanson{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#like{
+    width: 8%;
+}
+
+/*---------------MEDIA QUERIES-------------------*/
+
+@media (max-width: 768px) {
+   
+    #anim1 {
+        display: none;
+    }
+
+    #anim2 {
+        display: none;
+    }   
+
+    form {
+        flex: 0.5;
+        width: 50vw;
+    }
+
+    input {
+        padding: 10px;
+        margin: 5px;
+    }
+
+    #search:hover {
+        letter-spacing: 2px;
+    }
+
+    #bas {
+        width: 50%;
+    }
+
+    #retour:hover {
+        letter-spacing: 2px;
+    }
+}
