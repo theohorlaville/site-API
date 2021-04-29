@@ -442,7 +442,7 @@ function afficheChansons(response){
     
       chansons.innerHTML = content;
     });
-    
+
   i=0
 
   response.forEach(function(song){
@@ -467,8 +467,7 @@ function afficheChansons(response){
       }
 
     })
-    
-   
+      
   })  
 
   }
@@ -683,8 +682,6 @@ changepdp_bouton.addEventListener('click', () => {
 
 valid_change_pdp.addEventListener('click', () => {
  
-  changePdp.classList.toggle('displayed');
-  accueil.style.filter='blur(0px)';
 
   fetch('./src/routeur.php/photo/'+ id_utilisateur +','+ photo)
   .then(response=>response.json())
@@ -696,9 +693,16 @@ valid_change_pdp.addEventListener('click', () => {
 });
 
 function afficheNvellePdp(data){
-  console.log('c change');
-  let content = " <img id='photo_uti' src='./assets/"+ data +".png' > " ;
-  pdp.innerHTML = content;
+  console.log(data)
+  if(data!=0)
+  {
+    let content = " <img id='photo_uti' src='./assets/"+ data +".png' > " ;
+    pdp.innerHTML = content;
+    changePdp.classList.toggle('displayed');
+    accueil.style.filter='blur(0px)';
+    console.log('c change');
+  }
+  else alert('veuillez selectionner une photo')
 }
 
 

@@ -4,33 +4,7 @@ include("connexion.php");
 
 // Requete SQL attibuer à la variable
 
-//Recupere la liste de tous les artistes
-function getArtiste($dbb){
-    $rs = $dbb->query("SELECT * FROM artistes");
-    if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rows = array();
-    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
-        $rows[] = $r;
-    }
-    return $rows;
-}
 
-//Recupere la liste de tous les genres
-function getGenre($dbb){
-    $rs = $dbb->query("SELECT * FROM genres");
-    if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rows = array();
-    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
-        $rows[] = $r;
-    }
-    return $rows;
-}
 
 //Recupere la liste de toutes les chansons triées par date d'ajout
 function getChanson(){
@@ -113,19 +87,27 @@ function addArtiste($artiste){
 function addMusic($titre, $artiste, $genre){
     $link = connexion(); 
 
-    $rs=$link->prepare("SELECT `id_Art` FROM artistes as a WHERE a.artiste=?");
-    $rs->execute(array($artiste));
-    $idArtiste=$rs->fetch();
+    $rs=$link->prepare("SELECT `titre` FROM chansons WHERE chansons.titre=?");
+    $rs->execute(array($titre));
+    $chanson=$rs->fetch();
 
-   
-	$rs=$link->prepare("INSERT INTO `chansons` (`id_Ch`, `titre`, `art_id`, `gen_id`) VALUES (NULL, ?, ?,?);");
-    $rs->execute(array($titre,$idArtiste[0],$genre));
+    if(!$chanson[0]){
+
+        $rs=$link->prepare("SELECT `id_Art` FROM artistes as a WHERE a.artiste=?");
+        $rs->execute(array($artiste));
+        $idArtiste=$rs->fetch();
+
     
-    return getChanson();
+        $rs=$link->prepare("INSERT INTO `chansons` (`id_Ch`, `titre`, `art_id`, `gen_id`) VALUES (NULL, ?, ?,?);");
+        $rs->execute(array($titre,$idArtiste[0],$genre));
+        
+        return getChanson();
+    }
+
 }
 
 
-//Verifie que l'utilisateur qui tente de se connecter existe PAS FINI
+//Verifie que l'utilisateur qui tente de se connecter existe si oui connecte si non message d'erreur
 
 function connexionUser($pseudo,$mdp){
     $link = connexion(); 
@@ -186,21 +168,7 @@ function getChansonParTitre($titre){
     return $rows;
 }
 
-//Recupere la liste de chanson par genre. Le genre est defini par son id
-function getChansonParGenre($bdd,$idGenre){
-    $rs = $dbb->query("SELECT a.artiste, c.titre FROM chansons AS c 
-    JOIN artistes AS a ON (c.art_id=a.id_Art)
-        WHERE c.gen_id = ?");
-    if (!$rs) {
-        echo "Un problème est arrivé.\n";
-        exit;
-    }
-    $rows = array($idGenre);
-    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
-        $rows[] = $r;
-    }
-   return $rows;
-}
+
 
 //Recupere le nombre de like d'une chanson
 function getLikeChanson($bdd, $titre){
@@ -231,6 +199,8 @@ function addFav($numCh, $user){
     return getChanson();
 }
 
+// Supprime un like à une musique
+
 function supprFav($numCh, $user){
     $link = connexion();
     $rqt = $link->prepare('DELETE FROM `favoris` WHERE `favoris`.`uti_id` = ? AND `favoris`.`ch_id` = ?');
@@ -242,6 +212,8 @@ function supprFav($numCh, $user){
 
     return getChanson();
 }
+
+// Verifie si un utilisateur a liké cette musique
 
 function favVerif($idCh,$user){
     $link = connexion();
@@ -288,6 +260,8 @@ var_dump($fav);*/
 
 //---------------------------------------------
 
+
+
 function addUser($pseudo, $email, $mdp, $photo) {
     $link = connexion();
     $rqt = $link->prepare('INSERT INTO `utilisateurs` (`id_Uti`, `pseudo`, `mail`, `mdp`,`photo_num`) VALUES (NULL, ?,?,?,?);');
@@ -309,6 +283,8 @@ function addUserVerif($email){
     $result=$rs->fetch();
     return $result;
 }
+
+//Update la photo de profil d'un utilisateur
 
 
 function changePhoto($idPhoto, $idUti){
