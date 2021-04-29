@@ -106,6 +106,20 @@ retour2.addEventListener('click',function(){
 /*---------------------------------------------------S2------------------------------------------------------------- */
 
 
+
+
+  const parallax =  document.getElementById("fond2")
+  const parallax2 =  document.getElementById("fond3")
+
+
+window.addEventListener("scroll",function()
+	{
+		let hauteurPage = window.pageYOffset;
+		parallax.style.backgroundPositionY= hauteurPage * -0.2+"px"
+		parallax2.style.backgroundPositionY= hauteurPage * -0.4+"px"
+  }
+
+  )
 accueil.style.display='none'; // cache les musiques au début pour pas que l'écran descende dans la page d'accueil
 
 commu.addEventListener("click",function(){
