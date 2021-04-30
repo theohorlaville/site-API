@@ -370,7 +370,7 @@ retourConnexion.addEventListener('click',function(e){
 //------------------ AFFICHAGE CHANSONS-------------
 
 
-
+let val=0;
 
 
 document.ready(affichage())
@@ -378,7 +378,7 @@ document.ready(affichage())
 function affichage(){
   
   let numChanson;
-  fetch('./src/routeur.php/chansons/')
+  fetch('./src/routeur.php/chansons')
   .then(response=>response.json())
   .then(response=>{
     afficheChansons(response,numChanson)
@@ -387,25 +387,6 @@ function affichage(){
   
 }
 
-const form4=document.querySelector('#form4');
-const search_type=document.querySelector('.search-type');
-
-rechercher.addEventListener("click", function(e){
-  e.preventDefault();
-  if(form4.nom.value != ""){
-    const form= {};
-    form.nom= form4.nom.value;
-    form.search_type=search_type.options[search_type.selectedIndex].value;
-    //console.log('./src/routeur.php/chansons/'+form.search_type+"/"+form.nom);
-    fetch('./src/routeur.php/chansons/'+form.search_type+"/"+form.nom )
-    .then(response=>response.json())
-    .then(response=>{
-      afficheChansons(response);
-    })
-    .catch(error => { console.log(error) });
-  }
-})
-
 
 function afficheChansons(response,numChanson){
 
@@ -413,81 +394,61 @@ function afficheChansons(response,numChanson){
   var content = "<div id='chansons'>";
 
   response.forEach(function (chanson) {
-  
+    verifFav(chanson.id_Ch);
+    numChanson=chanson.id_Ch;
+    content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
+    content += "<a href='#' onclick='toogleCom(\"" + numChanson+  "\")'>Voir les commentaires</a>";
+    content += "<a href='#'>Ajouter un commentaire</a>";
+    content += "<div class='commentaire' id='com"+numChanson+"'>";
     
-    verifFav(chanson.id_Ch).then(json => {
-      console.log()
-      numChanson=chanson.id_Ch;
-      content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
-      content += "<div class='commentaire'>";
-      
-      if(json)
-      {
-        //console.log(numChanson)
-        content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
-      }
-      else
-      {
-        //console.log(numChanson)
-        content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
-      }
-      
-      content += "</div></div>";
-      chansons.innerHTML = content;
-    });
-   
+    if(val==1)
+    {
+      content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + numChanson+  "\")'>";
+    }
+    if(val==0)
+    {
+      content += "<img src='./assets/like-base' id='like' onclick='addFav(\"" + numChanson+  "\")'>";
+    }
+    
+    content += "</div></div>";
   
   });
-  
+
+  chansons.innerHTML = content;
  
 }
 
-async function verifFav(idChanson){ 
-    
-    let reponse = await fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur);
-    let json= await reponse.json();
-    
-  return json;   
+function toogleCom(numChanson){
+  let com = document.querySelector('#com'+numChanson);
+  com.classList.toggle("hide");
 }
 
-  //--tri par nombre de Favoris---
-  function affichageParFav(){
-    fetch('./src/routeur.php/triParFav/')
-    .then(response=>response.json())
-    .then(response=>{
-      afficheChansonsTriParFav(response)
+function verifFav(idChanson){ 
+
+  
+  fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur)
+    .then(data=>data.json())
+    .then(data=>{
+     
+     if(data==false){ val=0}
+     else {val=1}
+     
+     console.log(val)
     })
     .catch(error => { console.log(error) });
     
-  }
-  
-  function afficheChansonsTriParFav(response){
-  
+
     
-    var content = "<div id='chansons'>";
-  
-    response.forEach(function (chanson) {
-      content += "<div class='chanson'><div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
-      content += "<div class='commentaire'>";
-      
-      //suppr like au click
-      content += "<img src='./assets/like-act' id='like' onclick='supprFav(\"" +chanson.id_Ch + "\")'>";
-  
-      content += "</div></div>";
     
-    });
-  
-    chansons.innerHTML = content;
-   
-  }
- 
+}
+
 //------------------ Ajout FAVORI-------------
 
 function addFav(numChanson){
-  console.log(numChanson)
   const form={};
   form.numCh=numChanson;
   form.user=id_utilisateur;
+  console.log('add' +form);
   fetch('./src/routeur.php/fav', { method: 'POST', body: JSON.stringify(form)})
   .then(response=>response.json())
   .then(response=>{
@@ -502,6 +463,7 @@ function supprFav(numChanson){
   const form={};
   form.numCh=numChanson;
   form.user=id_utilisateur;
+  console.log('del' +form);
   fetch('./src/routeur.php/fav', { method: 'DELETE', body: JSON.stringify(form)}) // peut être devoir faire passer par l'uri 
   .then(response=>response.json())
   .then(response=>{
@@ -578,6 +540,7 @@ interface_bouton.addEventListener('click', () => {
 });
 
 deco_bouton.addEventListener('click', function() {
+  document.location.reload();
   sect1.style.width=100+'vw';
   sect3.style.width=0+'vw';
   retour1.style.opacity=0;
@@ -600,25 +563,8 @@ nvl_chanson_bouton.addEventListener('click', () => {
   document.querySelector('html body').style.overflowY = 'scroll';
 });
 
-annul_ajout_bouton.addEventListener('click', () => {
+annul_ajout_bouton.addEventListener('click', (e) => {
+  e.preventDefault();
   ajoute_chanson.classList.toggle('displayed');
   document.querySelector('html body').style.overflowY = 'scroll';
 });
-
-
-const ajout=document.querySelector('#triAjout');
-const fav=document.querySelector('#triFav');
-fav.addEventListener('click',function(e){
-  e.preventDefault();
-  console.log('testafav');
-  affichageParFav();
-})
-ajout.addEventListener('click',function(e){
-  e.preventDefault();
-  console.log('testajout');
-  affichage();
-
-});
-
-
-
