@@ -110,13 +110,15 @@ retour2.addEventListener('click',function(){
 
   const parallax =  document.getElementById("fond2")
   const parallax2 =  document.getElementById("fond3")
+  const parallax3 =  document.getElementById("fond4")
 
 
 window.addEventListener("scroll",function()
 	{
 		let hauteurPage = window.pageYOffset;
-		parallax.style.backgroundPositionY= hauteurPage * -0.2+"px"
-		parallax2.style.backgroundPositionY= hauteurPage * -0.4+"px"
+		parallax.style.backgroundPositionY= hauteurPage * -0.1+"px"
+    parallax2.style.backgroundPositionY= hauteurPage * -0.3+"px"
+		parallax3.style.backgroundPositionY= hauteurPage * -0.5+"px"
   }
 
   )
@@ -394,7 +396,6 @@ retourConnexion.addEventListener('click',function(e){
 
 
 //------------------ RECHERCHE CHANSONS-------------
-
 
 
 

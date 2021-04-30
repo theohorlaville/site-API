@@ -87,8 +87,8 @@ function addArtiste($artiste){
 function addMusic($titre, $artiste, $genre){
     $link = connexion(); 
 
-    $rs=$link->prepare("SELECT `titre` FROM chansons WHERE chansons.titre=?");
-    $rs->execute(array($titre));
+    $rs=$link->prepare("SELECT a.artiste, c.titre FROM chansons AS c JOIN artistes AS a ON (c.art_id=a.id_Art) WHERE a.artiste LIKE ? AND c.titre like ?");
+    $rs->execute(array($artiste,$titre));
     $chanson=$rs->fetch();
 
     if(!$chanson[0]){
