@@ -584,7 +584,8 @@ nvl_chanson_bouton.addEventListener('click', () => {
   document.querySelector('html body').style.overflowY = 'scroll';
 });
 
-annul_ajout_bouton.addEventListener('click', () => {
+annul_ajout_bouton.addEventListener('click', (e) => {
+  e.preventDefault();	
   ajoute_chanson.classList.toggle('displayed');
   document.querySelector('html body').style.overflowY = 'scroll';
 });
@@ -648,6 +649,7 @@ interface_bouton.addEventListener('click', () => {
 });
 
 deco_bouton.addEventListener('click', function() {
+  document.location.reload();
   sect1.style.width=100+'vw';
   sect3.style.width=0+'vw';
   retour1.style.opacity=0;
