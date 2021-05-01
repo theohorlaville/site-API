@@ -6,13 +6,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>LYR'IMACS</title>
   </head>
   <body>
     <section id="section3">
-      
+      <div id="fond2"></div>
+      <div id="fond3"></div>
+      <div id="fond4"></div>
       <div id="user">
             <div id="message"></div>
 
@@ -24,7 +28,7 @@
                         <button id="envoyer">Se connecter</button>
                   </form>
                   <h3>
-                        Pas de compte ? Crée en un <a id='inscription-button'>ici</a> 
+                        Pas de compte ? Créez en un <a id='inscription-button'>ici</a> 
                   </h3>
             </div>
 
@@ -56,15 +60,19 @@
       </div>
 
       <div id="communaute">
+            
                   <div id='interface'>   
                         <span id="deco_bouton">
                               Déconnexion
                         </span>     
                         <div id="pdp"></div>
-                        <h4 id="pseudo"></h4>       
+                        <h4 id="pseudo"></h4>  
+                        <span id="changepdp_bouton">
+                              Je veux changer ma p'tite bouille
+                        </span>      
                   </div>
                   <div id='accueil'>
-                        <h2 id="titre-accueil">Partageons de bonnes ondes</h2>
+                        <h2 id="titre-accueil">Partageons de bonnes ondes ♫</h2>
                         <div id='boutons'>
                               <span id="interface_bouton"> Interface </span>
                               <span id="lyrimacs_bouton"> Lyrimacs </span>
@@ -76,14 +84,15 @@
                                           <option value="titre">titre</option>
                                           <option value="artiste">artiste</option>
                                     </select>
-                                    <input type="text" class="search-bar" placeholder="Papaoutai, Billie Jean..." required="required">
+                                    <input type="text" name="nom" class="search-bar" placeholder="Papaoutai, Billie Jean..." required="required">
                                     <button id='rechercher' type="submit">Rechercher</button>
                               </form>
                         </div>
+                        
                         <div id='chansons'>
                               <div id='ajoute_chanson'>
                                     <form id='form5' action="#">
-                                          <h3>Y'a pas de raison qu'elle n'y soit pas ! </h3>
+                                          <h3>Ya pas de raison qu'elle n'y soit pas ! </h3>
                                           <div id=champ1>
                                                 <label>Son titre déjà :</label>
                                                 <input class="barre-titre" name="titre" type="text" placeholder="Le restaurant" required="required">
@@ -111,11 +120,31 @@
                                           </div>
                                     </form>
                               </div>
+                              <div id='tri'>
+                                    <button id='triFav' value="triParFav">les plus populaires</button>
+                                    <button id='triAjout' value="triParAjout">derniers ajouts</button>
+                                    <button id='mesFavs' value="mesFavs">mes favoris</button>
+                              </div>
                               <span id="nvl_chanson_bouton"> Nouvelle chanson </span>
-                              <div id='affiche_chansons'>    </div>
+                              <div id='affiche_chansons'>    
+
+                              </div>
                         </div>
-                        
   
+                  </div>
+
+                  <div id="changePdp">
+                      
+                              
+                              <div id="photos">
+                                    <img id="photo11" class="photo" src="./assets/1.png">
+                                    <img id="photo12" class="photo" src="./assets/2.png">
+                                    <img id="photo13" class="photo" src="./assets/3.png">
+                                    <img id="photo14" class="photo" src="./assets/4.png">
+                                    <img id="photo15" class="photo" src="./assets/5.png">
+                                    <img id="photo16" class="photo" src="./assets/6.png">
+                              </div>
+                              <span id='valid_change_pdp'>Ca part !</span>
                   </div>
             
       </div>
@@ -224,3 +253,8 @@
 </html>
 
 <script src="src/script.js"></script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+      AOS.init();
+    </script>

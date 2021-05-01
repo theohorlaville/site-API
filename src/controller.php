@@ -24,6 +24,10 @@
         supprFav($fav['numCh'],$fav['user']);
         echo json_encode(getChanson());
     }
+ 
+    function affMesFavs($idUti){
+        print json_encode(getLikeUtilisateur($idUti));
+    }
 
     function newChanson($form){
         $song = json_decode($form, true);
@@ -32,15 +36,6 @@
         echo json_encode(getChanson());
     }
 
-    /*
-    $test = [
-        "artiste" => "PNL",
-        "titre" => "au DD",
-        "genre"=>"4",
-    ];
-    $test=json_encode($test);
-    newChanson($test);
-    */
     function affChansonsParArtiste($nom){
         echo json_encode(getChansonParArtiste($nom));
     }
@@ -50,7 +45,7 @@
     }
 
     function affChansons(){
-        echo json_encode(getChanson());
+        print json_encode(getChanson());
     }
 
     function affChansonsTriParFav(){
@@ -64,15 +59,14 @@
     function affUti($id){
         print json_encode(getUti($link,$id));
     }
+
+    function changePdp($idPdp,$idUti){
+        print json_encode(changePhoto($idPdp,$idUti));
+    }
     
     function affInfoUti($id){
         echo json_encode(getInfoUti($id));
     }
-
-    /*
-    function affPhotoUti($id){
-        print json_encode(getPhotoUti($link,$id));
-    }*/
 
     function compareInscription($email){
 
@@ -105,20 +99,4 @@
         }
 
     }
-
-
-    
-
-    //echo compareUser('totosh');
-    
-    /*
-    $test = [
-        "email" => "test@gmail.com",
-        "pseudo" => "theo",
-        "mdp"=>"123456",
-        "photo"=>"1"
-    ];
-    $test=json_encode($test);
-    newUser($test);
-    */
 ?>
