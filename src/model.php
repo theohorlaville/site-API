@@ -9,7 +9,9 @@ include("connexion.php");
 //Recupere la liste de toutes les chansons triées par date d'ajout
 function getChanson(){
     $link = connexion();
-    $rs = $link->query("SELECT * FROM chansons, genres, artistes WHERE art_id = id_Art AND gen_id = id_G ORDER BY id_Ch DESC");
+    $rs = $link->query("SELECT * FROM chansons, genres, artistes 
+                        WHERE art_id = id_Art AND gen_id = id_G 
+                        ORDER BY id_Ch DESC");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
@@ -24,9 +26,10 @@ function getChanson(){
 //Récupère les chansons triées par nb de fav
 function getChansonTriParFav(){
     $link = connexion();
-    $rs = $link->query("SELECT * FROM chansons AS c
+    $rs = $link->query("SELECT * FROM chansons AS c 
                             JOIN favoris AS f ON (c.id_Ch =f.ch_id) 
                             JOIN artistes as a ON(a.id_Art=c.art_id)
+                            JOIN genres as g ON (g.id_G=c.gen_id)
                         GROUP BY titre, ch_id ORDER BY (COUNT(*)) DESC");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
@@ -41,10 +44,12 @@ function getChansonTriParFav(){
 
 
 
-//Recupere la liste de tous les commentaire par chanson
+//Recupere la liste de tous les commentaires par chanson
 function getCom($idCh){
     $link = connexion();
-    $rs = $link->prepare("SELECT utilisateurs.pseudo, commentaires.com  FROM  utilisateurs JOIN commentaires ON commentaires.uti_id=utilisateurs.id_Uti WHERE commentaires.ch_id=?");
+    $rs = $link->prepare("SELECT utilisateurs.pseudo, commentaires.com  FROM  utilisateurs 
+                            JOIN commentaires ON commentaires.uti_id=utilisateurs.id_Uti 
+                        WHERE commentaires.ch_id=?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
@@ -59,7 +64,7 @@ function getCom($idCh){
 
 // INSERT INTO commentaires (id_Com, com, ch_id, uti_id) VALUES (NULL, [commentaire?], [idChansons?], [idUtilisateur?]);
 
-//Recupere le pseudo de l'utilisateur dont on donne l'id
+//Récupere le pseudo de l'utilisateur dont on donne l'id
 function getInfoUti($id){
     $link=connexion();
 	$rs = $link->prepare("SELECT pseudo, photo_num FROM utilisateurs AS u WHERE u.id_Uti=? ");
@@ -73,7 +78,7 @@ function getInfoUti($id){
 }
 
 
-//Ajoute un artiste a la bdd grace a son nom
+//Ajoute un artiste a la bdd grace à son nom
 function addArtiste($artiste){
     $link=connexion();
     $rs=$link->prepare("SELECT `artiste` FROM artistes where artistes.artiste=?");
@@ -158,8 +163,8 @@ function getChansonParArtiste($artiste){
 function getChansonParTitre($titre){
     $link = connexion();
     $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
-    JOIN artistes AS a ON (c.art_id=a.id_Art)
-        WHERE c.titre LIKE ?");
+                                JOIN artistes AS a ON (c.art_id=a.id_Art)
+                            WHERE c.titre LIKE ?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
@@ -176,17 +181,19 @@ function getChansonParTitre($titre){
 
 //Recupere le nombre de like d'une chanson
 function getLikeChanson($bdd, $titre){
-    $rs = $dbb->prepare("SELECT COUNT(*) as count FROM chansons AS c 
-	JOIN favoris AS f ON (c.id_Ch =f.ch_id)    
-    JOIN artistes as a ON(a.id_Art=c.art_id)
-	GROUP BY titre, ch_id HAVING (c.titre LIKE ?)");
+    $link = connexion();
+    $rs = $link->prepare("SELECT COUNT(*) as count FROM chansons AS c 
+	                        JOIN favoris AS f ON (c.id_Ch =f.ch_id)    
+                            JOIN artistes as a ON(a.id_Art=c.art_id)
+	                    GROUP BY titre, ch_id HAVING (c.titre LIKE %)");
 	if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
-    $rs->execute(array($titre));
-    $nbLike = $rs->fetch();
-    return $nbLike['count'];
+    while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
+        $rows[] = $r;
+    }
+    return $rows;
 }
 
 // Ajoute un like à une musique
@@ -232,17 +239,15 @@ function favVerif($idCh,$user){
 }
 
 
-//Recupere les like d'un utilisateur
+//Récupere les like d'un utilisateur
 function getLikeUtilisateur($idUti){
     $link = connexion();
     $rs = $link->prepare("SELECT * FROM chansons AS c 
-	JOIN favoris AS f 
-		ON c.id_Ch=f.ch_id
-	JOIN utilisateurs AS u
-		ON u.id_Uti=f.uti_id
-    JOIN artistes AS a 
-    	ON a.id_Art=c.art_id
-    WHERE f.uti_id = ?");
+                            JOIN favoris AS f  ON c.id_Ch=f.ch_id
+                            JOIN utilisateurs AS u ON u.id_Uti=f.uti_id
+                            JOIN artistes AS a ON a.id_Art=c.art_id
+                            JOIN genres as g ON (g.id_G=c.gen_id)
+                        WHERE f.uti_id = ?");
     
 	if (!$rs) {
         echo "Un problème est arrivé.\n";

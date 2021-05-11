@@ -452,6 +452,10 @@ function afficheChansons(response){
             content += "<h3>"+chanson.titre+"</h3>";
             content += "<h4>"+chanson.artiste+"</h4>"
           content += "</div>"
+          content +="<div class='info-genre'>"
+            content +="<h5>" +chanson.nom_Gen+"</h5>"
+          
+          content+="</div>"
 
           content += "<div id='like-cont" +i+"'></div>"
         
