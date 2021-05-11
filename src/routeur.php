@@ -42,7 +42,8 @@
 					case 'titre':
 						switch($method){
 							case 'GET':
-								affChansonsParTitre($page[5]);
+								$name = rawurldecode($page[5]);
+								affChansonsParTitre($name);
 								break;
 							
 							default:
@@ -53,7 +54,8 @@
 					case 'artiste':
 						switch($method){
 							case 'GET':
-								affChansonsParArtiste($page[5]);
+								$name = rawurldecode($page[5]);
+								affChansonsParArtiste($name);
 								break;
 							
 							default:
