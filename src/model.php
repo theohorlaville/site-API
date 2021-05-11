@@ -145,13 +145,13 @@ function getChansonParArtiste($artiste){
     $link = connexion();
     $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
     JOIN artistes AS a ON (c.art_id=a.id_Art) 
-        WHERE a.artiste LIKE ?");
+        WHERE a.artiste LIKE '%$artiste%'");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
 
-    $rs->execute(array($artiste));  
+    $rs->execute();  
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }
@@ -164,13 +164,13 @@ function getChansonParTitre($titre){
     $link = connexion();
     $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
                                 JOIN artistes AS a ON (c.art_id=a.id_Art)
-                            WHERE c.titre LIKE ?");
+                            WHERE c.titre LIKE '%$titre%'");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
 
-    $rs->execute(array($titre));
+    $rs->execute();
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
     }
