@@ -128,30 +128,48 @@
 						echo 'OOPS';
 						
 				} break;
-					
-		case 'triParFav':
-			switch($method) {			
-				case 'GET':
-					affChansonsTriParFav();
-					break;
+			
+			case 'commentaire':
+				switch($method) {			
+					case 'GET':
+						affCom($page[4]);
+						break;
 						
-				default:
-					http_response_code('404');
-					echo 'OOPS';
-						
-			} break;
+					case 'POST':
+						$json = file_get_contents('php://input');
+						newCom($json);
+						break;
 
-		case 'MesFavs':
-			switch($method) {			
-				case 'GET':
-					affMesFavs($page[4]);
-					break;
+					default:
+						http_response_code('404');
+						echo 'OOPS';
 						
-				default:
-					http_response_code('404');
-					echo 'OOPS';
-						
-			} break;
+				} break;
+					
+					
+			case 'triParFav':
+				switch($method) {			
+					case 'GET':
+						affChansonsTriParFav();
+						break;
+							
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+							
+				} break;
+
+			case 'MesFavs':
+				switch($method) {			
+					case 'GET':
+						affMesFavs($page[4]);
+						break;
+							
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+							
+				} break;
 
         default : 
 			http_response_code('500');

@@ -44,6 +44,7 @@ let flagCache=false;
 
 //---------Utilisateur connecté --------//
 let id_utilisateur=0;
+let musiqueCourante=0;
 
 /*---------------------------------------------------S1------------------------------------------------------------- */
 
@@ -446,16 +447,25 @@ function afficheChansons(response){
     
     i++;
   
-     
-      content += "<div class='chanson' >"
+        content += "<div class='chanson' >"
+          content += "<div class='info-chanson'>"
+            content += "<h3>"+chanson.titre+"</h3>";
+            content += "<h4>"+chanson.artiste+"</h4>"
+          content += "</div>"
 
-      
-      content +="<div class='info-chanson'><h3>"+chanson.titre+"</h3><h4>"+chanson.artiste+"</h4></div>";
-     
-      content += "<div id='like-cont" +i+"'>"
-      content += "</div><div class='commentaire'><button class='button_commentaire' >commentaires</button></div></div>";
-    
+          content += "<div id='like-cont" +i+"'></div>"
+        
+          content += "<div class='commentaire'>";
+            content +="<button onclick='affCom("+chanson.id_Ch+','+i+")' class='button_commentaire'>commentaires</button>";
+          content += "</div>"
+        content += "</div>"
+
+        content += "<div  class='commentaires' id='chansonNum" +i+"'></div>";
+
+      content += "</div>"
+
       chansons.innerHTML = content;
+
     });
 
   i=0
@@ -468,17 +478,17 @@ function afficheChansons(response){
 
     verifFav(song.id_Ch).then(json=>{
 
-      console.log(json)
+      
 
      
       if(json==false)
       {
-        likezone.innerHTML= "<img src='./assets/like-base' id='like' onclick='addFav(\"" + song.id_Ch+  "\")'>";
+        likezone.innerHTML= "<img src='./assets/like-base.png' id='like' onclick='addFav(\"" + song.id_Ch+  "\")'>";
       }
 
       else
       {
-        likezone.innerHTML = "<img src='./assets/like-act' id='like' onclick='supprFav(\"" + song.id_Ch+  "\")'>";
+        likezone.innerHTML = "<img src='./assets/like-act.png' id='like' onclick='supprFav(\"" + song.id_Ch+  "\")'>";
       }
 
     })
@@ -584,7 +594,8 @@ nvl_chanson_bouton.addEventListener('click', () => {
   document.querySelector('html body').style.overflowY = 'scroll';
 });
 
-annul_ajout_bouton.addEventListener('click', () => {
+annul_ajout_bouton.addEventListener('click', (e) => {
+  e.preventDefault();	
   ajoute_chanson.classList.toggle('displayed');
   document.querySelector('html body').style.overflowY = 'scroll';
 });
@@ -622,6 +633,45 @@ function supprFav(numChanson){
   
 }
 
+
+//------------------ Affiche COMMENTAIRE-------------
+
+
+function affCom(idChanson,place){
+
+  musiqueCourante=place;
+
+  fetch('./src/routeur.php/commentaire/'+ idChanson)
+  .then(response=>response.json())
+  .then(response=>{
+    afficheCommentaire(response); 
+  })
+  .catch(error => { console.log(error) });
+}
+
+function afficheCommentaire(data){
+
+  var content='<div class="ajoutCom"><p> ajouter votre commentaire</p><input type="text" size="40"></input><button>Valider</button></div>';
+  let zone=document.querySelector("#chansonNum" +musiqueCourante+"")
+
+  zone.classList.toggle('com-displayed');
+
+  zone.innerHTML=content;
+
+    data.forEach(function (commentaire) {
+      content+='<div class="com">'
+      content+='<p>'+commentaire.pseudo +'&nbsp à dit &nbsp'+'</p>'
+      content+='<p>'+commentaire.com+'</p>';
+      content+='</div>';
+      zone.innerHTML=content;
+
+    })
+
+  musiqueCourante=0;
+
+}
+
+
 //-------------------------------Interface ------------------
 
 function afficheInfo(data){
@@ -648,6 +698,7 @@ interface_bouton.addEventListener('click', () => {
 });
 
 deco_bouton.addEventListener('click', function() {
+  document.location.reload();
   sect1.style.width=100+'vw';
   sect3.style.width=0+'vw';
   retour1.style.opacity=0;

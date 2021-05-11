@@ -597,14 +597,20 @@ h4{
 /*---------------COMMU 2 :  barre de recherche ------------------*/
 
 #barre_recherche {
-    background: #fcf8ec;
-    width: 100%;
+    background-color: rgba(180, 174, 232, 0.5);
+    width: 80%;
     display: flex;
     align-items: center;
+    justify-content: center;
     top: 0;
     box-sizing: border-box;
     padding: 1%;
     z-index: 1;
+}
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #form4 {
@@ -625,7 +631,7 @@ h4{
 
 #form4 select, #form5 select {
     cursor: pointer;
-    color: #b4aee8;
+    color: white;
     font-family: 'Bebas Neue', cursive;
     font-size: 1em;
     border: none;
@@ -677,12 +683,12 @@ h4{
 }
 
 #ajoute_chanson{
-    background-color: #b4aee8;
+    background-color: rgba(180, 174, 232, 0.5);
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    width: 100%;
+    width: 80%;
     height: 0;
     position: relative;
     box-sizing: border-box;
@@ -858,6 +864,8 @@ h3{
     transition-duration: 0.2s;
 }
 
+
+
 /*--------------COMMU 5 - CHANGE PDP -----------------*/
 
 
@@ -890,6 +898,40 @@ h3{
     margin: 2vw 2vw 0vh 2vh;
     color: #e7e7e7;
 
+}
+
+/*---------------COMMU 6 :  affichage com ------------------*/
+
+
+.com{
+    
+    width: auto;
+    padding: 1%;
+    margin: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: rgba(180, 174, 232, 0.3);
+    
+}
+
+.commentaires{
+    display: none;
+}
+
+.com-displayed{
+    height: 100%;
+    display: block;
+}
+
+.ajoutCom{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
 
 /*---------------MEDIA QUERIES-------------------*/

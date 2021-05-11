@@ -40,13 +40,16 @@ function getChansonTriParFav(){
 }
 
 
+
 //Recupere la liste de tous les commentaire par chanson
-function getCom($dbb){
-    $rs = $dbb->query("SELECT id_Com, com, ch_id, uti_id, id_Uti, pseudo, id_Ch FROM commentaires, chansons, utilisateurs WHERE ch_id = id_Ch AND uti_id = id_Uti");
+function getCom($idCh){
+    $link = connexion();
+    $rs = $link->prepare("SELECT utilisateurs.pseudo, commentaires.com  FROM  utilisateurs JOIN commentaires ON commentaires.uti_id=utilisateurs.id_Uti WHERE commentaires.ch_id=?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
     }
+    $rs->execute(array($idCh));
     $rows = array();
     while($r = $rs->fetch(PDO::FETCH_ASSOC)) {
         $rows[] = $r;
@@ -54,6 +57,7 @@ function getCom($dbb){
     return $rows;
 }
 
+// INSERT INTO commentaires (id_Com, com, ch_id, uti_id) VALUES (NULL, [commentaire?], [idChansons?], [idUtilisateur?]);
 
 //Recupere le pseudo de l'utilisateur dont on donne l'id
 function getInfoUti($id){

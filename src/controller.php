@@ -58,12 +58,13 @@
         echo json_encode(getChanson());
     }
 
+
     function affChansonsTriParFav(){
         echo json_encode(getChansonTriParFav());
     }
 
-    function affCom(){
-        print json_encode(getCom($link));
+    function affCom($idCh){
+        print json_encode(getCom($idCh));
     }
 
     function affUti($id){
