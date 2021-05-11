@@ -71,10 +71,13 @@
         print json_encode(getUti($link,$id));
     }
 
-    function changePdp($idPdp,$idUti){
-        print json_encode(changePhoto($idPdp,$idUti));
+    function changePdp($form){
+        $pdp=json_decode($form,true);
+        echo json_encode(changePhoto($pdp['photo'],$pdp['utilisateur']));
     }
     
+
+
     function affInfoUti($id){
         echo json_encode(getInfoUti($id));
     }

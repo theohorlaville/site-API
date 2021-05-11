@@ -746,14 +746,17 @@ const valid_change_pdp=document.querySelector('#valid_change_pdp');
 changepdp_bouton.addEventListener('click', () => {
   changePdp.classList.toggle('displayed');
   accueil.style.filter='blur(4px)';
-  console.log('testpdp');
   document.querySelector('html body').style.overflowY = 'scroll';
 });
 
 valid_change_pdp.addEventListener('click', () => {
  
+  form={}
+  form.photo=photo;
+  form.utilisateur=id_utilisateur;
 
-  fetch('./src/routeur.php/photo/'+ id_utilisateur +','+ photo)
+  console.log(JSON.stringify(form))
+  fetch('./src/routeur.php/user/', { method: 'PUT', body: JSON.stringify(form)})
   .then(response=>response.json())
   .then(response=>{
     afficheNvellePdp(response);

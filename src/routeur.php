@@ -85,6 +85,11 @@
 					case 'GET':
 						affInfoUti($page[4]);
 						break;
+
+					case 'PUT':
+						$json = file_get_contents('php://input');
+						changePdp($json);
+						break;
 						
 					default:
 						http_response_code('404');
@@ -92,18 +97,6 @@
 						
 				} break;
 
-			case 'photo':
-				switch($method) {			
-					case 'GET':
-						$subpage = explode(',',$page[4]);
-						changePdp($subpage[1],$subpage[0]);
-						break;
-							
-					default:
-						http_response_code('404');
-						echo 'OOPS';
-							
-				} break;
 
 			case 'fav' : 
 				switch($method) {			
