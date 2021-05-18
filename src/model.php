@@ -2,9 +2,6 @@
 // Relier la base de données
 include("connexion.php");
 
-// Requete SQL attibuer à la variable
-
-
 
 //Recupere la liste de toutes les chansons triées par date d'ajout
 function getChanson(){
@@ -22,6 +19,7 @@ function getChanson(){
     }
     return $rows;
 }
+
 
 //Récupère les chansons triées par nb de fav
 function getChansonTriParFav(){
@@ -43,7 +41,6 @@ function getChansonTriParFav(){
 }
 
 
-
 //Recupere la liste de tous les commentaires par chanson
 function getCom($idCh){
     $link = connexion();
@@ -62,6 +59,8 @@ function getCom($idCh){
     return $rows;
 }
 
+
+//Ajoute un commentaire à une musique
 function addCom($com,$chanson,$uti) {
     $link = connexion();
     $rs = $link->prepare("INSERT INTO commentaires (id_Com, com, ch_id, uti_id) VALUES (NULL, ?, ?, ?)");
@@ -71,6 +70,7 @@ function addCom($com,$chanson,$uti) {
     }
     $rs->execute(array($com,$chanson,$uti));
 }
+
 
 //Récupere le pseudo de l'utilisateur dont on donne l'id
 function getInfoUti($id){
@@ -125,7 +125,6 @@ function addMusic($titre, $artiste, $genre){
 
 
 //Verifie que l'utilisateur qui tente de se connecter existe si oui connecte si non message d'erreur
-
 function connexionUser($pseudo,$mdp){
     $link = connexion(); 
     $rs=$link->prepare("SELECT mdp FROM utilisateurs AS u WHERE u.pseudo=? ");
@@ -145,7 +144,6 @@ function connexionUser($pseudo,$mdp){
     }
     return FALSE;
 }
-
 
 
 //Recupere la liste des chansons d'un artiste donné
@@ -186,7 +184,6 @@ function getChansonParTitre($titre){
 }
 
 
-
 //Recupere le nombre de like d'une chanson
 function getLikeChanson($bdd, $titre){
     $link = connexion();
@@ -204,8 +201,8 @@ function getLikeChanson($bdd, $titre){
     return $rows;
 }
 
-// Ajoute un like à une musique
 
+// Ajoute un like à une musique
 function addFav($numCh, $user){
     $link = connexion();
     $rqt = $link->prepare('INSERT INTO `favoris` (`uti_id`, `ch_id`) VALUES (?,?);');
@@ -218,8 +215,8 @@ function addFav($numCh, $user){
     return getChanson();
 }
 
-// Supprime un like à une musique
 
+// Supprime un like à une musique
 function supprFav($numCh, $user){
     $link = connexion();
     $rqt = $link->prepare('DELETE FROM `favoris` WHERE `favoris`.`uti_id` = ? AND `favoris`.`ch_id` = ?');
@@ -232,8 +229,8 @@ function supprFav($numCh, $user){
     return getChanson();
 }
 
-// Verifie si un utilisateur a liké cette musique
 
+// Verifie si un utilisateur a liké cette musique
 function favVerif($idCh,$user){
     $link = connexion();
     $rs = $link->prepare('SELECT `uti_id` FROM `favoris` WHERE `favoris`.`uti_id` = ? AND `favoris`.`ch_id` = ?');
@@ -270,7 +267,7 @@ function getLikeUtilisateur($idUti){
 }
 
 
-
+//Ajoute un nouvel utilisateur
 function addUser($pseudo, $email, $mdp, $photo) {
     $link = connexion();
     $rqt = $link->prepare('INSERT INTO `utilisateurs` (`id_Uti`, `pseudo`, `mail`, `mdp`,`photo_num`) VALUES (NULL, ?,?,?,?);');
@@ -282,7 +279,7 @@ function addUser($pseudo, $email, $mdp, $photo) {
 }
 
 
-
+//Verifie si l'utilisateur n'existe pas déja
 function addUserVerif($email){
     $link = connexion();
     $rs=$link->prepare("SELECT mail FROM utilisateurs as u WHERE u.mail=?");
@@ -295,9 +292,8 @@ function addUserVerif($email){
     return $result;
 }
 
+
 //Update la photo de profil d'un utilisateur
-
-
 function changePhoto($idPhoto, $idUti){
     $link = connexion();
     $rs=$link->prepare('UPDATE utilisateurs SET photo_num = ? WHERE utilisateurs.id_Uti = ? ');
