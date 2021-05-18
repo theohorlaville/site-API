@@ -47,7 +47,7 @@ function getChansonTriParFav(){
 //Recupere la liste de tous les commentaires par chanson
 function getCom($idCh){
     $link = connexion();
-    $rs = $link->prepare("SELECT utilisateurs.pseudo, commentaires.com  FROM  utilisateurs 
+    $rs = $link->prepare("SELECT utilisateurs.pseudo, commentaires.com, commentaires.ch_id  FROM  utilisateurs 
                             JOIN commentaires ON commentaires.uti_id=utilisateurs.id_Uti 
                         WHERE commentaires.ch_id=?");
     if (!$rs) {
@@ -62,7 +62,15 @@ function getCom($idCh){
     return $rows;
 }
 
-// INSERT INTO commentaires (id_Com, com, ch_id, uti_id) VALUES (NULL, [commentaire?], [idChansons?], [idUtilisateur?]);
+function addCom($com,$chanson,$uti) {
+    $link = connexion();
+    $rs = $link->prepare("INSERT INTO commentaires (id_Com, com, ch_id, uti_id) VALUES (NULL, ?, ?, ?)");
+    if (!$rs) {
+        echo "Un problème est arrivé.\n";
+        exit;
+    }
+    $rs->execute(array($com,$chanson,$uti));
+}
 
 //Récupere le pseudo de l'utilisateur dont on donne l'id
 function getInfoUti($id){

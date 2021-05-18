@@ -44,7 +44,9 @@ let flagCache=false;
 
 //---------Utilisateur connecté --------//
 let id_utilisateur=0;
+let id_chanson=0;
 let musiqueCourante=0;
+
 
 /*---------------------------------------------------S1------------------------------------------------------------- */
 
@@ -644,6 +646,7 @@ function supprFav(numChanson){
 function affCom(idChanson,place){
 
   musiqueCourante=place;
+  id_chanson=idChanson;
 
   fetch('./src/routeur.php/commentaire/'+ idChanson)
   .then(response=>response.json())
@@ -654,8 +657,8 @@ function affCom(idChanson,place){
 }
 
 function afficheCommentaire(data){
-
-  var content='<div class="ajoutCom"><p> ajouter votre commentaire</p><input type="text" size="40"></input><button>Valider</button></div>';
+  
+  var content='<div class="ajoutCom"><p> ajouter votre commentaire</p><input id="button_ajout_com'+musiqueCourante+'" type="text" size="40"></input><button onclick=ajouteCommentaire('+""+musiqueCourante+","+id_chanson+""+')>Valider</button></div>';
   let zone=document.querySelector("#chansonNum" +musiqueCourante+"")
 
   zone.classList.toggle('com-displayed');
@@ -671,12 +674,40 @@ function afficheCommentaire(data){
 
     })
 
-  musiqueCourante=0;
+  
 
 }
 
+//-------------- AJOUT COMMENTAIRE-------------
 
-//-------------------------------Interface ------------------
+
+
+function ajouteCommentaire(placeMusique,idMusique){
+
+  console.log(placeMusique);
+  console.log(idMusique);
+  com=document.querySelector('#button_ajout_com'+placeMusique+"").value;
+
+
+  form={};
+  form.com=com;
+  form.idChanson=idMusique;
+  form.id_utilisateur=id_utilisateur;
+  
+
+  
+  fetch('./src/routeur.php/commentaire', { method: 'POST', body: JSON.stringify(form)})
+  .then(response=>response.json())
+  .then(response=>{
+  afficheCommentaire(response)
+  })
+  .catch(error => { console.log(error) });
+  
+}
+
+
+
+//--------------------Interface ------------------
 
 function afficheInfo(data){
   let content = " <img id='photo_uti' src='./assets/"+ data.photo_num +".png' > " ;

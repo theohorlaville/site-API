@@ -36,16 +36,7 @@
         addMusic($song['titre'],$song['artiste'],$song['genre']);
         echo json_encode(getChanson());
     }
-    /*
-
-    $test = [
-        "artiste" => "jul",
-        "titre" => "bande organisée",
-        "genre"=>"1",
-    ];
-    $test=json_encode($test);
-    newChanson($test);
-    */
+ 
     function affChansonsParArtiste($nom){
         echo json_encode(getChansonParArtiste($nom));
     }
@@ -65,6 +56,12 @@
 
     function affCom($idCh){
         print json_encode(getCom($idCh));
+    }
+
+    function newCom($form){
+        $com = json_decode($form, true);
+        addCom($com['com'],$com['idChanson'],$com['id_utilisateur']);
+        print json_encode(getCom($com['idChanson']));
     }
 
     function affUti($id){
