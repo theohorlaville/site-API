@@ -64,9 +64,6 @@
         print json_encode(getCom($com['idChanson']));
     }
 
-    function affUti($id){
-        print json_encode(getUti($link,$id));
-    }
 
     function changePdp($form){
         $pdp=json_decode($form,true);
@@ -111,19 +108,4 @@
 
     }
 
-
-    
-
-    //echo compareUser('totosh');
-    
-    /*
-    $test = [
-        "email" => "test@gmail.com",
-        "pseudo" => "theo",
-        "mdp"=>"123456",
-        "photo"=>"1"
-    ];
-    $test=json_encode($test);
-    newUser($test);
-    */
 ?>

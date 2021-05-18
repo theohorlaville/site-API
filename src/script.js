@@ -43,10 +43,10 @@ let flagCache=false;
 
 
 //---------Utilisateur connecté --------//
+
 let id_utilisateur=0;
 let id_chanson=0;
 let musiqueCourante=0;
-
 
 /*---------------------------------------------------S1------------------------------------------------------------- */
 
@@ -511,7 +511,6 @@ async function verifFav(idChanson){
     let reponse = await fetch('./src/routeur.php/fav/'+idChanson+','+id_utilisateur);
     let json= await reponse.json();
     
-    
   return json;   
 }
 
@@ -639,7 +638,6 @@ function supprFav(numChanson){
   
 }
 
-
 //------------------ Affiche COMMENTAIRE-------------
 
 
@@ -667,15 +665,12 @@ function afficheCommentaire(data){
 
     data.forEach(function (commentaire) {
       content+='<div class="com">'
-      content+='<p>'+commentaire.pseudo +'&nbsp à dit &nbsp'+'</p>'
-      content+='<p>'+commentaire.com+'</p>';
+      content+='<p>'+commentaire.pseudo +'&nbsp : &nbsp'+'</p>'
+      content+='<p>'+'"'+commentaire.com+'"'+'</p>';
       content+='</div>';
       zone.innerHTML=content;
 
     })
-
-  
-
 }
 
 //-------------- AJOUT COMMENTAIRE-------------
@@ -694,6 +689,9 @@ function ajouteCommentaire(placeMusique,idMusique){
   form.idChanson=idMusique;
   form.id_utilisateur=id_utilisateur;
   
+  let zone=document.querySelector("#chansonNum" +placeMusique+"")
+
+  zone.classList.toggle('com-displayed');
 
   
   fetch('./src/routeur.php/commentaire', { method: 'POST', body: JSON.stringify(form)})

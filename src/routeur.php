@@ -6,24 +6,23 @@
 	$method = $_SERVER['REQUEST_METHOD'];
 	
     switch($page[3]) {
-		case 'inscription' : 
-			switch($method) {
-				case 'POST':
-                    $json = file_get_contents('php://input');
-                    newUser($json);
-                    break;
-				
-				case 'GET':
-					compareInscription($page[4]);
-					break;
+			case 'inscription' : 
+				switch($method) {
+					case 'POST':
+						$json = file_get_contents('php://input');
+						newUser($json);
+						break;
 					
-				default:
-					http_response_code('404');
-					echo 'OOPS';
-					
-			} break;
+					case 'GET':
+						compareInscription($page[4]);
+						break;
+						
+					default:
+						http_response_code('404');
+						echo 'OOPS';
+						
+				} break;
 
-		
 			case 'connexion' : 
 				switch($method) {			
 					case 'GET':
@@ -80,7 +79,7 @@
 								
 								
 						} break;
-			} break;
+				} break;
 
 			case 'user' : 
 				switch($method) {			
@@ -98,7 +97,6 @@
 						echo 'OOPS';
 						
 				} break;
-
 
 			case 'fav' : 
 				switch($method) {			
@@ -170,5 +168,4 @@
 			http_response_code('500');
 			echo 'unknown endpoint';
 			break;
-            
     }

@@ -269,14 +269,6 @@ function getLikeUtilisateur($idUti){
     return $rows;
 }
 
-//---------------------------------------------
-/*
-$fav = getLikeUtilisateur(2);
-echo ('Hey tes chansons de pute sont :');
-var_dump($fav);*/
-
-//---------------------------------------------
-
 
 
 function addUser($pseudo, $email, $mdp, $photo) {
@@ -288,6 +280,8 @@ function addUser($pseudo, $email, $mdp, $photo) {
     }
     $rqt->execute(array($pseudo, $email, $mdp, $photo));
 }
+
+
 
 function addUserVerif($email){
     $link = connexion();
@@ -310,11 +304,5 @@ function changePhoto($idPhoto, $idUti){
     $rs->execute(array($idPhoto, $idUti));
     return $idPhoto; 
 }
-
-/*
-$fav2 = changePhoto(2,7);
-echo ('Ta nvelle pdp :');
-var_dump($fav2);*/
-
 
 ?>
