@@ -149,9 +149,10 @@ function connexionUser($pseudo,$mdp){
 //Recupere la liste des chansons d'un artiste donné
 function getChansonParArtiste($artiste){
     $link = connexion();
-    $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
-    JOIN artistes AS a ON (c.art_id=a.id_Art) 
-        WHERE a.artiste LIKE ?");
+    $rs = $link->prepare("SELECT a.artiste, c.titre, g.nom_Gen FROM chansons AS c 
+                            JOIN artistes AS a ON (c.art_id=a.id_Art) 
+                            JOIN genres AS g ON (g.id_G=c.gen_id)
+                        WHERE a.artiste LIKE ?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
         exit;
@@ -168,8 +169,9 @@ function getChansonParArtiste($artiste){
 //Recupere la liste des chansons ayant le titre donné
 function getChansonParTitre($titre){
     $link = connexion();
-    $rs = $link->prepare("SELECT a.artiste, c.titre FROM chansons AS c 
+    $rs = $link->prepare("SELECT a.artiste, c.titre, g.nom_Gen FROM chansons AS c 
                                 JOIN artistes AS a ON (c.art_id=a.id_Art)
+                                JOIN genres AS g ON (g.id_G=c.gen_id)
                             WHERE c.titre LIKE ?");
     if (!$rs) {
         echo "Un problème est arrivé.\n";
